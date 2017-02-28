@@ -1,0 +1,18 @@
+Package: m2b
+Title: Movement to behaviour
+Version: 1.0
+Description: Movement to behaviour using random forest
+Depends:
+    R (>= 3.3.0),dplyr,caTools,randomForest,ggplot2,caret,methods
+License: MIT +
+Encoding: UTF-8
+LazyData: true
+Date: 2016-11-20
+Authors@R: c(person("Laurent","Dubroca",
+	email="laurent.dubroca@gmail.com",
+	role=c("aut","cre")),
+    person("Andréa", "Thiébault",
+	role= c("aut"),
+	email="andrea.thiebault@gmail.com"))
+Maintainer: Laurent Dubroca <laurent.dubroca@gmail.com>
+RoxygenNote: 5.0.1
