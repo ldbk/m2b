@@ -3,14 +3,7 @@ Title: Movement to behaviour
 Version: 1.0
 Description: Movement to behaviour using random forest
 Depends:
-    R (>= 3.3.0),
-    caTools,
-    randomForest,
-    ggplot2,
-    caret,
-    methods
-Suggests:
-	adehabitatLT
+    R (>= 3.3.0),dplyr,caTools,randomForest,ggplot2,caret,methods
 License: MIT +
 Encoding: UTF-8
 LazyData: true

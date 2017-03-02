@@ -10,18 +10,47 @@ xytb is an trajectory object with observed behaviour
 \section{Slots}{
 
 \describe{
-\item{\code{desc}}{}
+\item{\code{desc:}}{a character vector. A description of the data.}
 
-\item{\code{xyt}}{}
+\item{\code{xyt:}}{a data frame of the track information. One row is one position
+described by 11 variables :
+\tabular{ll}{
+id: \tab individual id\cr
+t: \tab time in POSIXct\cr
+x: \tab longitude\cr
+y: \tab latitude\cr
+dt: \tab time (s) between the current location and the next one\cr
+dist: \tab distance (m) between the current location and the next one
+  calculated using the Vincenty ellipsoid method.
+  See \link{distVincentyEllipsoid})\cr
+v: \tab speed (m.s^{-1})\cr
+dx: \tab the increase of the move in the x direction.\cr
+dy: \tab the increase of the move in the y direction.\cr
+theta: \tab the angle between each move and the x axis.\cr
+thetarel: \tab the turning angle between successive moves.\cr
+}
+This slot is very similar to the ltraj class of the adehabitatLT package.}
 
-\item{\code{b}}{}
+\item{\code{b:}}{a data frame of the observed behaviour related to the track. One row
+is one behavioural observation related to the track described by 3 variables: 
+\tabular{ll}{
+id: \tab individual id\cr
+t: \tab time in POSIXct\cr
+b: \tab observed behaviour (character)\cr
+}}
 
-\item{\code{dxyt}}{}
+\item{\code{dxyt:}}{a data frame of the derived information from the track.}
 
-\item{\code{befdxyt}}{}
+\item{\code{befdxyt:}}{a data frame of the derived information shifted back in time.}
 
-\item{\code{model}}{}
+\item{\code{model}}{: a randomForest model.}
 
-\item{\code{predb}}{}
+\item{\code{predb:}}{a data frame of the predicted behaviour using the random forest
+model of the slot model. 3 variables :
+\tabular{ll}{
+id: \tab individual id\cr
+t: \tab time in POSIXct\cr
+b: \tab observed behaviour (character)\cr
+}}
 }}
 

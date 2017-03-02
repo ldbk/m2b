@@ -2,19 +2,48 @@
 #'
 #' xytb is an trajectory object with observed behaviour
 #'
-#' @slot desc
+#' @slot desc: a character vector. A description of the data.
 #'
-#' @slot xyt
+#' @slot xyt: a data frame of the track information. One row is one position
+#' described by 11 variables :
+#' \tabular{ll}{
+#' id: \tab individual id\cr
+#' t: \tab time in POSIXct\cr
+#' x: \tab longitude\cr
+#' y: \tab latitude\cr
+#' dt: \tab time (s) between the current location and the next one\cr
+#' dist: \tab distance (m) between the current location and the next one
+#'   calculated using the Vincenty ellipsoid method.
+#'   See \link{distVincentyEllipsoid})\cr
+#' v: \tab speed (m.s^{-1})\cr
+#' dx: \tab the increase of the move in the x direction.\cr
+#' dy: \tab the increase of the move in the y direction.\cr
+#' theta: \tab the angle between each move and the x axis.\cr
+#' thetarel: \tab the turning angle between successive moves.\cr
+#' }
+#' This slot is very similar to the ltraj class of the adehabitatLT package.
 #'
-#' @slot b 
+#' @slot b: a data frame of the observed behaviour related to the track. One row
+#' is one behavioural observation related to the track described by 3 variables: 
+#' \tabular{ll}{
+#' id: \tab individual id\cr
+#' t: \tab time in POSIXct\cr
+#' b: \tab observed behaviour (character)\cr
+#' }
 #'
-#' @slot dxyt 
+#' @slot dxyt: a data frame of the derived information from the track. 
 #'
-#' @slot befdxyt 
+#' @slot befdxyt: a data frame of the derived information shifted back in time. 
 #'
-#' @slot model 
+#' @slot model : a randomForest model.
 #'
-#' @slot predb 
+#' @slot predb: a data frame of the predicted behaviour using the random forest
+#' model of the slot model. 3 variables :
+#' \tabular{ll}{
+#' id: \tab individual id\cr
+#' t: \tab time in POSIXct\cr
+#' b: \tab observed behaviour (character)\cr
+#' }
 #'
 #'
 #'
@@ -42,7 +71,88 @@ setClass(
 			)
 	 )
 
+#' xytb class conversion to ltraj object 
+#'
+#' The function converts a xytb object in ltraj object as defined in the
+#' adehabitatLT package (see \link[adehabitatLT]{as.ltraj}).
+#'
+#' @param xytb: an xytb object
+#' @return A ltraj object with behavioural information recorded in the infoloc
+#' @examples
+#' \dontrun{ 
+#' #a dataset:
+#' str(track_CAGA_005)
+#' xytb<-xytb(track_CAGA_005,"a track",3,.5)
+#' ltraj<-xytb2ltraj(xytb)
+#' #all adehabitatLT function are now available
+#' summary(ltraj)
+#' plot(ltraj)
+#' }
+#' @name xytb2ltraj
+#' @export
+xytb2ltraj<-function(xytb){
+	if(!requireNamespace("adehabitatLT", quietly = TRUE)){
+	 stop("adehabitatLT needed for this function to work. Please install it.",call.=FALSE)
+	}
+	if(class(xytb)!="xytb"){stop("the object is not an xytb object")}
+	if(nrow(xytb)@xyt==0){stop("the xyt slot seems empty")}
+	xyt<-xytb@xyt
+	track<-adehabitatLT::as.ltraj(xy=xyt[,c("x","y")],date=xyt$t,id=xyt$id,infolocs=xytb@b)
+	return(track)
+}
+
+#' ltraj object conversion to xytb object 
+#'
+#' The function converts a ltraj object in an  xytb object 
+#' (see \link{xytb-class}).
+#'
+#' @param ltraj: a ltraj object
+#' @return A xytb object with behavioural information taken from the infolocs
+#' slots by default.
+#' @examples
+#' \dontrun{ 
+#' #a dataset:
+#' str(track_CAGA_005)
+#' xytb<-xytb(track_CAGA_005,"a track",3,.5)
+#' ltraj<-xytb2ltraj(xytb)
+#' #all adehabitatLT function are now available
+#' summary(ltraj)
+#' plot(ltraj)
+#' }
+#str(track_CAGA_005)
+#xytb<-xytb(track_CAGA_005,"a track",3,.5)
+#ltraj<-xytb2ltraj(xytb)
+#all adehabitatLT function are now available
+#summary(ltraj)
+#plot(ltraj)
+#' @name ltraj2xytb
+#' @export
+ltraj2xytb<-function(ltraj){
+	if(!requireNamespace("adehabitatLT", quietly = TRUE)){
+	 stop("adehabitatLT needed for this function to work. Please install it.",call.=FALSE)
+	}
+	if(!any(class(ltraj)!="ltraj")){stop("the object is not a ltraj object")}
+
+	if(nrow(xytb)@xyt==0){stop("the xyt slot seems empty")}
+	xyt<-xytb@xyt
+	track<-adehabitatLT::as.ltraj(xy=xyt[,c("x","y")],date=xyt$t,id=xyt$id,infolocs=xytb@b)
+	return(track)
+}
+
+
+
 #' xytb class constructor
+#'
+#' The methods to build an xytb object (see \link{xytb-class} for the class
+#' description).
+#'
+#' Usage:
+#' \tabular{ccc}{
+#' signature \tab output object \tab example\cr
+#' missing \tab generate an empty xytn object\tab \code{xytb()}\cr
+#' data.frame,character vector\tab generate an xytn object with track
+#' information \tab \code{xytb(xy,"trackxx")}\cr
+#' }
 #'
 #' @name xytb
 #' @export
@@ -87,7 +197,7 @@ setMethod("xytb",
 			  stop("t is not POSIXct")
 		  }
 		  #order data according to id and time
-		  object<-arrange(arrange(object,t),id)
+		  object<-object[order(object$id,object$t),]
 		  xyt0<-data.frame(id=object$id,t=object$t,x=object$x,y=object$y)
 		  b0<-data.frame(id=object$id,t=object$t,b=object$b)
 		  dxyt0<-dxyt(xyt0)
@@ -132,7 +242,7 @@ setMethod("xytb",
 			  stop("invalid values in idquant (values in [0,1])")
 		  }
 		  #order data according to id and time
-		  object<-arrange(arrange(object,t),id)
+		  object<-object[order(object$id,object$t),]
 		  xyt0<-data.frame(id=object$id,t=object$t,x=object$x,y=object$y)
 		  b0<-data.frame(id=object$id,t=object$t,b=object$b)
 		  dxyt0<-dxyt(xyt0)
@@ -185,7 +295,7 @@ setMethod("xytb",
 			  stop("invalid values in move (has to be >0, integer and < nb of track points)")
 		  }
 		  #order data according to id and time
-		  object<-arrange(arrange(object,t),id)
+		  object<-object[order(object$id,object$t),]
 		  xyt0<-data.frame(id=object$id,t=object$t,x=object$x,y=object$y)
 		  b0<-data.frame(id=object$id,t=object$t,b=object$b)
 		  dxyt0<-dxyt(xyt0)

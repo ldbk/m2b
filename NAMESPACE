@@ -2,8 +2,10 @@
 
 export(dxyt)
 export(dxyt2)
+export(ltraj2xytb)
 export(modelRF)
 export(shiftvalue)
 export(xytb)
+export(xytb2ltraj)
 exportClasses(xytb)
 exportMethods(plot)

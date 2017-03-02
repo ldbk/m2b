@@ -25,6 +25,6 @@ plot(xy)
 #a model (the function modelRF update the model inside the xytb object)
 xy<-modelRF(xy,type="actual",ntree=501,mtry=15)
 #compare prediction and observation
-table(xy@b$b,xy@predb$b)
+plot(xy@b$b,xy@predb$b)
 
 ```

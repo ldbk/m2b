@@ -7,6 +7,16 @@
 xytb(object, desc, winsize, idquant, move, ...)
 }
 \description{
-xytb class constructor
+The methods to build an xytb object (see \link{xytb-class} for the class
+description).
+}
+\details{
+Usage:
+\tabular{ccc}{
+signature \tab output object \tab example\cr
+missing \tab generate an empty xytn object\tab \code{xytb()}\cr
+data.frame,character vector\tab generate an xytn object with track
+information \tab \code{xytb(xy,"trackxx")}\cr
+}
 }
 
