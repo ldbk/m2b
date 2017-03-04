@@ -9,4 +9,7 @@ shiftvalue(dat0, mov = seq(5, 250, 5))
 \description{
 internal function
 }
+\author{
+Laurent Dubroca
+}
 

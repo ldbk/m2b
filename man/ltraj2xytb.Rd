@@ -4,28 +4,29 @@
 \alias{ltraj2xytb}
 \title{ltraj object conversion to xytb object}
 \usage{
-ltraj2xytb(ltraj)
+ltraj2xytb(ltraj, desc = "ltraj object convert to xytb")
 }
 \arguments{
 \item{ltraj:}{a ltraj object}
+
+\item{desc:}{general descriptor of the data}
 }
 \value{
 A xytb object with behavioural information taken from the infolocs
-slots by default.
+(aka ltraj object should correspond the an export of xytb object in ltraj).
 }
 \description{
 The function converts a ltraj object in an  xytb object 
 (see \link{xytb-class}).
 }
 \examples{
-\dontrun{ 
 #a dataset:
 str(track_CAGA_005)
 xytb<-xytb(track_CAGA_005,"a track",3,.5)
 ltraj<-xytb2ltraj(xytb)
-#all adehabitatLT function are now available
-summary(ltraj)
-plot(ltraj)
+xytb2<-ltraj2xytb(ltraj,"a track")
 }
+\author{
+Laurent Dubroca
 }
 

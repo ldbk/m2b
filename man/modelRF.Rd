@@ -5,8 +5,8 @@
 \title{xytb randomForest function}
 \usage{
 modelRF(xytb, type = c("actual", "shifted"), nob = "-1", colin = T,
-  varkeep = c("v", "dist", "thetarel"), zerovar = T, ntree = 501,
-  importance = T, ...)
+  varkeep = c("v", "dist", "thetarel"), zerovar = T, rfcv = F,
+  ntree = 501, importance = T, ...)
 }
 \arguments{
 \item{xytb:}{an xytb object}
@@ -27,6 +27,12 @@ parameters and to help interpretation)}
 \item{zerovar:}{boolean - remove near zero variance predictor (see the caret
 package for more details)}
 
+\item{rfcv:}{boolean - run a random forest cross-validation for feature selection
+procedure for xybt (this call the \code{rfcv} fonction for the model).
+This function shows the cross-validated prediction performance of models 
+with sequentially reduced number of predictors (ranked by variable
+importance) via a nested cross-validation procedure for a xytb object.}
+
 \item{ntree:}{number of trees in the random Forest (see the randomForest
 package for more details)}
 
@@ -35,9 +41,29 @@ package for more details)}
 \description{
 Build a random forest model on an xytb object, predicting behaviour using
 regular observation (type actual) or shifted one (type shifted). Parameters
-are passed to the randomForest function if needed.
+are passed to the randomForest or the rfcv functions of the randomForest
+package if needed.
+}
+\examples{
+#a dataset
+str(track_CAGA_005)
+#generate a complete xytb object with derived (over moving windows of 3, 5
+#and 9 points, with quantile at 0, 50 and 100\%) and shifted information on 10
+#and 100 points
+completexytb<-xytb(track_CAGA_005,"a track",c(3,5,9),c(0,.5,1),c(10,100))
+#compute a random forest model to predict behaviour (b, where -1 is
+unobserved behaviour) using the derived
+parameters ("actual")
+xytb<-modelRF(xytb,"actual",nob="-1",colin=T,varkeep=c("v","thetarel"),zerovar=T)
+#cross-validation for the same model (time consuming !)
+xytb<-modelRF(xytb,"actual",nob="-1",colin=T,varkeep=c("v","thetarel"),zerovar=T,rfcv=T)
+
+
 }
 \author{
 Laurent Dubroca and Andréa Thiébault
+}
+\seealso{
+See \link[randomForest]{randomForest} and \link[randomForest]{rfcv}
 }
 

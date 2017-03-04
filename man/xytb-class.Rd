@@ -43,7 +43,11 @@ b: \tab observed behaviour (character)\cr
 
 \item{\code{befdxyt:}}{a data frame of the derived information shifted back in time.}
 
-\item{\code{model}}{: a randomForest model.}
+\item{\code{model:}}{a randomForest model (see
+\link[randomForest]{randomForest}).}
+
+\item{\code{rfcv:}}{the output of the cross-validation procedure (see
+\link[randomForest]{rfcv}).}
 
 \item{\code{predb:}}{a data frame of the predicted behaviour using the random forest
 model of the slot model. 3 variables :
@@ -53,4 +57,7 @@ t: \tab time in POSIXct\cr
 b: \tab observed behaviour (character)\cr
 }}
 }}
+\author{
+Laurent Dubroca
+}
 

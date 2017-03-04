@@ -17,7 +17,6 @@ The function converts a xytb object in ltraj object as defined in the
 adehabitatLT package (see \link[adehabitatLT]{as.ltraj}).
 }
 \examples{
-\dontrun{ 
 #a dataset:
 str(track_CAGA_005)
 xytb<-xytb(track_CAGA_005,"a track",3,.5)
@@ -26,5 +25,7 @@ ltraj<-xytb2ltraj(xytb)
 summary(ltraj)
 plot(ltraj)
 }
+\author{
+Laurent Dubroca
 }
 

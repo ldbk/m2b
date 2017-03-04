@@ -1,9 +1,12 @@
 Package: m2b
-Title: Movement to behaviour
+Title: Movement to Behaviour
 Version: 1.0
-Description: Movement to behaviour using random forest
+Description: A package to predict behaviour from movement 
+	characteristics using observation and random forest.
+	Need to extend the description.
 Depends:
-    R (>= 3.3.0),
+    R (>= 3.3.0)
+Imports:
     caTools,
     randomForest,
     ggplot2,
@@ -11,10 +14,10 @@ Depends:
     methods
 Suggests:
 	adehabitatLT
-License: MIT +
+License: CC0
 Encoding: UTF-8
 LazyData: true
-Date: 2016-11-20
+Date: 2017-04-03
 Authors@R: c(person("Laurent","Dubroca",
 	email="laurent.dubroca@gmail.com",
 	role=c("aut","cre")),

@@ -1,4 +1,4 @@
-#' A cape gannet track with behavioural and social information
+#' A cape gannet track with behavioural information
 #'
 #' A data frame of 5 variables reporting a gannet track with
 #' information regarding its behaviour.

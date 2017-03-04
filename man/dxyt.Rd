@@ -9,4 +9,7 @@ dxyt(xyt)
 \description{
 internal function
 }
+\author{
+Laurent Dubroca
+}
 

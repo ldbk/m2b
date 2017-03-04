@@ -3,7 +3,7 @@
 \docType{data}
 \name{track_CAGA_005}
 \alias{track_CAGA_005}
-\title{A cape gannet track with behavioural and social information}
+\title{A cape gannet track with behavioural information}
 \format{Tracking data
 
 Columns:
