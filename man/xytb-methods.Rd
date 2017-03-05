@@ -3,10 +3,16 @@
 \docType{methods}
 \name{xytb}
 \alias{xytb}
-\alias{xytb,ANY-methods}
-\alias{xytb,data.frame,character,ANY,ANY,ANY-method}
-\alias{xytb,data.frame-methods,character-methods}
 \alias{xytb,missing,missing,ANY,ANY,ANY-method}
+\alias{xytb}
+\alias{xytb,data.frame,character,ANY,ANY,ANY-method}
+\alias{xytb,data.frame,character}
+\alias{xytb,data.frame,character,vector,vector,ANY-method}
+\alias{xytb,data.frame,character,vector,vector}
+\alias{xytb,data.frame,character,vector,vector,vector-method}
+\alias{xytb,data.frame,character,vector,vector,vector}
+\alias{plot,xytb,ANY-method}
+\alias{plot}
 \title{xytb class constructor}
 \usage{
 xytb(object, desc, winsize, idquant, move, ...)
@@ -15,9 +21,18 @@ xytb(object, desc, winsize, idquant, move, ...)
 
 \S4method{xytb}{data.frame,character,ANY,ANY,ANY}(object, desc, winsize,
   idquant, move, ...)
+
+\S4method{xytb}{data.frame,character,vector,vector,ANY}(object, desc, winsize,
+  idquant, move, ...)
+
+\S4method{xytb}{data.frame,character,vector,vector,vector}(object,
+  desc = "unknow track", winsize = seq(3, 13, 2), idquant = seq(0, 1,
+  0.25), move = c(5, 10), ...)
+
+\S4method{plot}{xytb,ANY}(x)
 }
 \arguments{
-\item{object:}{a data frame with 5 columns
+\item{object}{a data frame with 5 columns
 \tabular{ccc}{
 id \tab individual id \tab character \cr
 x \tab longitude \tab decimal degree \cr
@@ -26,20 +41,24 @@ t \tab date and time \tab POSIXct \cr
 b \tab behaviour \tab character \cr
 }}
 
-\item{desc:}{vector of character describing the dataset}
+\item{desc}{vector of character describing the dataset}
 
-\item{winsize:}{a numerical vector giving the lenght of the windows used to
+\item{winsize}{a numerical vector giving the lenght of the windows used to
 calculate moving standard deviation, average, mad and quantile for the speed
 (v), the distance (dist) and the relative angle (thetarel).}
 
-\item{idquant:}{a numerical vector giving the quantiles. For example if
+\item{idquant}{a numerical vector giving the quantiles. For example if
 idquant=c(0,0.25,.5,1), the quantiles at 0% (min), 25% (first
 quartile), 50% (median) and 100% (max) will be
 calculated.}
 
-\item{move:}{a numerical vector giving the shift used to computed parameters
+\item{move}{a numerical vector giving the shift used to computed parameters
 back in time. For example if move=c(5,10,100), the parameters will be shifted
 backward by 5, 10 and 100 locations.}
+
+\item{...}{part of the generic definition}
+
+\item{x}{An xytb object.}
 }
 \value{
 an xytb object
@@ -47,6 +66,8 @@ an xytb object
 \description{
 The methods to build an xytb object (see \link{xytb-class} for the class
 description).
+
+xytb plot function
 }
 \section{Methods' signature}{
 
@@ -67,20 +88,19 @@ description).
 	time according to the \code{move} parameters.
 }
 }
+
 \examples{
-#a dataset
-str(track_CAGA_005)
 #generate an empty xytb object
 xytb()
 #generate an xytb object with track information only
+#track_CAGA_005 is a dataset
 simplexytb<-xytb(track_CAGA_005,"a track")
 #generate a complete xytb object with derived (over moving windows of 3, 5
 #and 9 points, with quantile at 0, 50 and 100\%) and shifted information on 10
 #and 100 points
-completexytb<-xytb(track_CAGA_005,"a track",c(3,5,9),c(0,.5,1),c(10,100))
+xytb<-xytb(track_CAGA_005,"a track",c(3,5,9),c(0,.5,1),c(10,100))
 
 }
 \author{
 Laurent Dubroca
 }
-

@@ -6,10 +6,14 @@
 \usage{
 shiftvalue(dat0, mov = seq(5, 250, 5))
 }
+\arguments{
+\item{dat0}{A parameter}
+
+\item{mov}{A parameter}
+}
 \description{
 internal function
 }
 \author{
 Laurent Dubroca
 }
-

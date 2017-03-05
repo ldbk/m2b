@@ -6,10 +6,12 @@
 \usage{
 dxyt(xyt)
 }
+\arguments{
+\item{xyt}{xyt parameters}
+}
 \description{
 internal function
 }
 \author{
 Laurent Dubroca
 }
-

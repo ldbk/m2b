@@ -7,7 +7,7 @@
 xytb2ltraj(xytb)
 }
 \arguments{
-\item{xytb:}{an xytb object}
+\item{xytb}{An xytb object}
 }
 \value{
 A ltraj object with behavioural information recorded in the infoloc
@@ -17,8 +17,7 @@ The function converts a xytb object in ltraj object as defined in the
 adehabitatLT package (see \link[adehabitatLT]{as.ltraj}).
 }
 \examples{
-#a dataset:
-str(track_CAGA_005)
+#track_CAGA_005 is a dataset
 xytb<-xytb(track_CAGA_005,"a track",3,.5)
 ltraj<-xytb2ltraj(xytb)
 #all adehabitatLT function are now available
@@ -28,4 +27,3 @@ plot(ltraj)
 \author{
 Laurent Dubroca
 }
-

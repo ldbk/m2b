@@ -2,9 +2,9 @@
 #'
 #' xytb is an trajectory object with observed behaviour
 #'
-#' @slot desc: a character vector. A description of the data.
+#' @slot desc a character vector. A description of the data.
 #'
-#' @slot xyt: a data frame of the track information. One row is one position
+#' @slot xyt a data frame of the track information. One row is one position
 #' described by 11 variables :
 #' \tabular{ll}{
 #' id: \tab individual id\cr
@@ -23,7 +23,7 @@
 #' }
 #' This slot is very similar to the ltraj class of the adehabitatLT package.
 #'
-#' @slot b: a data frame of the observed behaviour related to the track. One row
+#' @slot b a data frame of the observed behaviour related to the track. One row
 #' is one behavioural observation related to the track described by 3 variables: 
 #' \tabular{ll}{
 #' id: \tab individual id\cr
@@ -31,17 +31,17 @@
 #' b: \tab observed behaviour (character)\cr
 #' }
 #'
-#' @slot dxyt: a data frame of the derived information from the track. 
+#' @slot dxyt a data frame of the derived information from the track. 
 #'
-#' @slot befdxyt: a data frame of the derived information shifted back in time. 
+#' @slot befdxyt a data frame of the derived information shifted back in time. 
 #'
-#' @slot model: a randomForest model (see
+#' @slot model a randomForest model (see
 #' \link[randomForest]{randomForest}).
 #'
-#' @slot rfcv: the output of the cross-validation procedure (see
+#' @slot rfcv the output of the cross-validation procedure (see
 #' \link[randomForest]{rfcv}).
 #'
-#' @slot predb: a data frame of the predicted behaviour using the random forest
+#' @slot predb a data frame of the predicted behaviour using the random forest
 #' model of the slot model. 3 variables :
 #' \tabular{ll}{
 #' id: \tab individual id\cr
@@ -53,8 +53,7 @@
 #'
 #' @name xytb-class
 #' @exportClass xytb
-setClass(
-	 Class='xytb',
+setClass(Class='xytb',
 	 slots=list(
 		    desc='character',
 		    xyt='data.frame',
@@ -82,11 +81,10 @@ setClass(
 #' The function converts a xytb object in ltraj object as defined in the
 #' adehabitatLT package (see \link[adehabitatLT]{as.ltraj}).
 #'
-#' @param xytb: an xytb object
+#' @param xytb An xytb object
 #' @return A ltraj object with behavioural information recorded in the infoloc
 #' @examples
-#' #a dataset:
-#' str(track_CAGA_005)
+#' #track_CAGA_005 is a dataset
 #' xytb<-xytb(track_CAGA_005,"a track",3,.5)
 #' ltraj<-xytb2ltraj(xytb)
 #' #all adehabitatLT function are now available
@@ -111,13 +109,12 @@ xytb2ltraj<-function(xytb){
 #' The function converts a ltraj object in an  xytb object 
 #' (see \link{xytb-class}).
 #'
-#' @param ltraj: a ltraj object
-#' @param desc: general descriptor of the data
+#' @param ltraj A ltraj object
+#' @param desc General descriptor of the data
 #' @return A xytb object with behavioural information taken from the infolocs
 #' (aka ltraj object should correspond the an export of xytb object in ltraj).
 #' @examples
-#' #a dataset:
-#' str(track_CAGA_005)
+#' #track_CAGA_005 is a dataset
 #' xytb<-xytb(track_CAGA_005,"a track",3,.5)
 #' ltraj<-xytb2ltraj(xytb)
 #' xytb2<-ltraj2xytb(ltraj,"a track")
@@ -151,7 +148,7 @@ ltraj2xytb<-function(ltraj,desc="ltraj object convert to xytb"){
 #' The methods to build an xytb object (see \link{xytb-class} for the class
 #' description).
 #' 
-#' @param object: a data frame with 5 columns
+#' @param object a data frame with 5 columns
 #' \tabular{ccc}{
 #' id \tab individual id \tab character \cr
 #' x \tab longitude \tab decimal degree \cr
@@ -159,17 +156,18 @@ ltraj2xytb<-function(ltraj,desc="ltraj object convert to xytb"){
 #' t \tab date and time \tab POSIXct \cr
 #' b \tab behaviour \tab character \cr
 #' }
-#' @param desc: vector of character describing the dataset
-#' @param winsize: a numerical vector giving the lenght of the windows used to
+#' @param desc vector of character describing the dataset
+#' @param winsize a numerical vector giving the lenght of the windows used to
 #' calculate moving standard deviation, average, mad and quantile for the speed
 #' (v), the distance (dist) and the relative angle (thetarel).
-#' @param idquant: a numerical vector giving the quantiles. For example if
+#' @param idquant a numerical vector giving the quantiles. For example if
 #' idquant=c(0,0.25,.5,1), the quantiles at 0% (min), 25% (first
 #' quartile), 50% (median) and 100% (max) will be
 #' calculated.
-#' @param move: a numerical vector giving the shift used to computed parameters
+#' @param move a numerical vector giving the shift used to computed parameters
 #' back in time. For example if move=c(5,10,100), the parameters will be shifted
 #' backward by 5, 10 and 100 locations.
+#' @param ... part of the generic definition 
 #' 
 #' @section Methods' signature:
 #' \itemize{
@@ -190,23 +188,21 @@ ltraj2xytb<-function(ltraj,desc="ltraj object convert to xytb"){
 #' }
 #' @return an xytb object 
 #' @examples
-#' #a dataset
-#' str(track_CAGA_005)
 #' #generate an empty xytb object
 #' xytb()
 #' #generate an xytb object with track information only
+#' #track_CAGA_005 is a dataset
 #' simplexytb<-xytb(track_CAGA_005,"a track")
 #' #generate a complete xytb object with derived (over moving windows of 3, 5
 #' #and 9 points, with quantile at 0, 50 and 100%) and shifted information on 10
 #' #and 100 points
-#' completexytb<-xytb(track_CAGA_005,"a track",c(3,5,9),c(0,.5,1),c(10,100))
+#' xytb<-xytb(track_CAGA_005,"a track",c(3,5,9),c(0,.5,1),c(10,100))
 #'
 #' @author Laurent Dubroca
 #' @name xytb
 #' @rdname xytb-methods
 #' @exportMethod xytb
 setGeneric("xytb",
-#	  #function(desc,xyt,b,dxyt,befdxyt,model,predb,...){
 	  function(object,desc,winsize,idquant,move,...){
 		standardGeneric("xytb")
 	  } 
@@ -220,12 +216,12 @@ setMethod("xytb",
 	  signature(object="missing",desc="missing"),
 	  #function(desc="null xybt object",xyt,b,dxyt,befdxyt,model,predb){
 	  function(desc="null xybt object"){
-		  return(new("xytb"))
+		  return(methods::new("xytb"))
 	  }
 	  )
 
 #' @rdname xytb-methods
-#' @aliases xytb,data.frame-methods,character-methods
+#' @aliases xytb,data.frame,character
 setMethod("xytb",
 	  signature(object="data.frame",desc="character"),
 	  function(object,desc="unknow track",...){
@@ -251,13 +247,15 @@ setMethod("xytb",
 		  }
 		  #order data according to id and time
 		  object<-object[order(object$id,object$t),]
-		  xyt0<-data.frame(id=object$id,t=object$t,x=object$x,y=object$y)
-		  b0<-data.frame(id=object$id,t=object$t,b=object$b)
+		  xyt0<-data.frame(id=object$id,t=object$t,x=object$x,y=object$y,stringsAsFactors=F)
+		  b0<-data.frame(id=object$id,t=object$t,b=object$b,stringsAsFactors=F)
 		  dxyt0<-dxyt(xyt0)
-		  new("xytb",xyt=dxyt0,b=b0,desc=desc)
+		  methods::new("xytb",xyt=dxyt0,b=b0,desc=desc)
 	  }
 	  )
 
+#' @rdname xytb-methods
+#' @aliases xytb,data.frame,character,vector,vector
 setMethod("xytb",
 	  signature(object="data.frame",desc="character",winsize="vector",idquant="vector"),
 	  function(object,desc="unknow track",winsize=seq(3,13,2),idquant=seq(0,1,.25),...){
@@ -296,14 +294,16 @@ setMethod("xytb",
 		  }
 		  #order data according to id and time
 		  object<-object[order(object$id,object$t),]
-		  xyt0<-data.frame(id=object$id,t=object$t,x=object$x,y=object$y)
-		  b0<-data.frame(id=object$id,t=object$t,b=object$b)
+		  xyt0<-data.frame(id=object$id,t=object$t,x=object$x,y=object$y,stringsAsFactors=F)
+		  b0<-data.frame(id=object$id,t=object$t,b=object$b,stringsAsFactors=F)
 		  dxyt0<-dxyt(xyt0)
 		  dxyt1<-dxyt2(dxyt0,winsize,idquant)
-		  new("xytb",xyt=dxyt0,b=b0,desc=desc,dxyt=dxyt1)
+		  methods::new("xytb",xyt=dxyt0,b=b0,desc=desc,dxyt=dxyt1)
 	  }
 	  )
 
+#' @rdname xytb-methods
+#' @aliases xytb,data.frame,character,vector,vector,vector
 setMethod("xytb",
 	  signature(object="data.frame",desc="character",winsize="vector",idquant="vector",move="vector"),
 	  function(object,desc="unknow track",winsize=seq(3,13,2),idquant=seq(0,1,.25),move=c(5,10),...){
@@ -349,12 +349,12 @@ setMethod("xytb",
 		  }
 		  #order data according to id and time
 		  object<-object[order(object$id,object$t),]
-		  xyt0<-data.frame(id=object$id,t=object$t,x=object$x,y=object$y)
-		  b0<-data.frame(id=object$id,t=object$t,b=object$b)
+		  xyt0<-data.frame(id=object$id,t=object$t,x=object$x,y=object$y,stringsAsFactors=F)
+		  b0<-data.frame(id=object$id,t=object$t,b=object$b,stringsAsFactors=F)
 		  dxyt0<-dxyt(xyt0)
 		  dxyt1<-dxyt2(dxyt0,winsize,idquant)
 		  dxyt2<-shiftvalue(dxyt1,move)
-		  new("xytb",xyt=dxyt0,b=b0,desc=desc,dxyt=dxyt1,befdxyt=dxyt2)
+		  methods::new("xytb",xyt=dxyt0,b=b0,desc=desc,dxyt=dxyt1,befdxyt=dxyt2)
 	  }
 	  )
 
@@ -362,7 +362,7 @@ setMethod("xytb",
 #'
 #' @author Laurent Dubroca
 #' @name dxyt
-#' @param xyt: xyt parameters
+#' @param xyt xyt parameters
 #' @export
 dxyt<-function(xyt){
   xy<-xyt
@@ -385,9 +385,9 @@ dxyt<-function(xyt){
 #'
 #' @author Laurent Dubroca
 #' @name dxyt2
-#' @param dxyt
-#' @param winsize 
-#' @param idquant 
+#' @param dxyt A parameter
+#' @param winsize A parameter
+#' @param idquant A parameter
 #' @export
 dxyt2<-function(dxyt,winsize=seq(3,13,2),idquant=seq(0,1,.25)){
  #init size window (odd number please) and quantile range
@@ -406,7 +406,7 @@ dxyt2<-function(dxyt,winsize=seq(3,13,2),idquant=seq(0,1,.25)){
 			    paste0("_w",winsize),
 		stringsAsFactors=F),1,paste0,collapse=""),
 	vnomquant,thetanomquant,distnomquant)
-  dat0<-data.frame(matrix(NA,ncol=length(nomparam),nrow=nrow(dxyt)))
+  dat0<-data.frame(matrix(NA,ncol=length(nomparam),nrow=nrow(dxyt)),stringsAsFactors=F)
   names(dat0)<-nomparam
   #calculate variables
   dat0[,1:ncol(dxyt)]<-dxyt
@@ -459,12 +459,14 @@ dxyt2<-function(dxyt,winsize=seq(3,13,2),idquant=seq(0,1,.25)){
 #'
 #' @author Laurent Dubroca
 #' @name shiftvalue 
+#' @param dat0 A parameter
+#' @param mov A parameter
 #' @export
 shiftvalue<-function(dat0,mov=seq(5,250,5)){
   print("shift value backward")
   #nbcoldat<-length(8:ncol(dat0))
   nbcoldat<-ncol(dat0)
-  datadd<-data.frame(matrix(NA,ncol=nbcoldat*length(mov),nrow=nrow(dat0)))
+  datadd<-data.frame(matrix(NA,ncol=nbcoldat*length(mov),nrow=nrow(dat0)),stringsAsFactors=F)
   #varn<-expand.grid(colnames(dat0)[c(-1:-7)],mov)
   varn<-expand.grid(colnames(dat0),mov)
   varn<-paste(varn[,1],sprintf("%02d",varn[,2]),sep="_mov_")
@@ -475,20 +477,21 @@ shiftvalue<-function(dat0,mov=seq(5,250,5)){
     datadd[(mov[i]+1):nrow(datadd),idcol]<-dat0[1:(nrow(datadd)-mov[i]),1:ncol(dat0)]
   }
   print("Done")
-  datadd<-cbind(dat0,datadd)
+  datadd<-cbind(dat0,datadd,stringsAsFactors=F)
   datadd<-datadd[,!names(datadd)%in%names(dat0)]
   return(datadd)
 }
 
 #' xytb plot function
 #'
-#' @name plot 
-#' @export
+#' @param x An xytb object.
+#' @rdname xytb-methods
+#' @aliases plot
 setMethod("plot",
 	  signature(x="xytb"),
 	  function(x){
-		  pipo<-data.frame(id=x@xyt$id,x=x@xyt$x,y=x@xyt$y,b=x@b$b)	
-		  ggplot(pipo,aes(x=x,y=y,color=b,group=id))+geom_path()+facet_wrap(~id)+ggtitle(x@desc)
+		  pipo<-data.frame(id=x@xyt$id,x=x@xyt$x,y=x@xyt$y,b=x@b$b,stringsAsFactors=F)	
+		  ggplot2::ggplot(pipo,aes(x=pipo$x,y=pipo$y,color=pipo$b,group=pipo$id))+geom_path()+facet_wrap(~id)+ggtitle(x@desc)
 
 	  }
 	  )
@@ -502,71 +505,73 @@ setMethod("plot",
 #'
 #' @author Laurent Dubroca and Andréa Thiébault
 #'
-#' @param xytb: an xytb object
-#' @param type: character -actual or shifted- use actual data or shifted one to
+#' @param xytb an xytb object
+#' @param type character -actual or shifted- use actual data or shifted one to
 #' build the model
-#' @param nob: character. Define the unobserved value of the behaviour (and
+#' @param nob character. Define the unobserved value of the behaviour (and
 #' where prediction are done)
-#' @param colin: boolean - remove colinearity among predictors (see the caret
+#' @param colin boolean - remove colinearity among predictors (see the caret
 #' package for more details)
-#' @param varkeep: character vector - the variables names in this vector are
+#' @param varkeep character vector - the variables names in this vector are
 #' keeped in the model even if colinearity is found (usefull to keep 'classical'
 #' parameters and to help interpretation)
-#' @param zerovar: boolean - remove near zero variance predictor (see the caret
+#' @param zerovar boolean - remove near zero variance predictor (see the caret
 #' package for more details)
-#' @param rfcv: boolean - run a random forest cross-validation for feature selection
+#' @param rfcv boolean - run a random forest cross-validation for feature selection
 #' procedure for xybt (this call the \code{rfcv} fonction for the model).
 #' This function shows the cross-validated prediction performance of models 
 #' with sequentially reduced number of predictors (ranked by variable
 #' importance) via a nested cross-validation procedure for a xytb object. 
-#' @param ntree: number of trees in the random Forest (see the randomForest
+#' @param ntree number of trees in the random Forest (see the randomForest
 #' package for more details)
-#' @param importance: boolean (see the randomForest package for more details)
+#' @param importance boolean (see the randomForest package for more details)
+#' @param ... other arguements passed to randonForest or rfcv
 #'
 #' @examples
-#' #a dataset
-#' str(track_CAGA_005)
+#' #track_CAGA_005 is dataset
 #' #generate a complete xytb object with derived (over moving windows of 3, 5
 #' #and 9 points, with quantile at 0, 50 and 100%) and shifted information on 10
 #' #and 100 points
-#' completexytb<-xytb(track_CAGA_005,"a track",c(3,5,9),c(0,.5,1),c(10,100))
+#' xytb<-xytb(track_CAGA_005,"a track",c(3,5,9),c(0,.5,1),c(10,100))
 #' #compute a random forest model to predict behaviour (b, where -1 is
 #' #unobserved behaviour) using the derived
 #' #parameters ("actual")
-#' xytb<-modelRF(xytb,"actual",nob="-1",colin=T,varkeep=c("v","thetarel"),zerovar=T)
+#' xytb<-modelRF(xytb,"actual",nob="-1",colin=TRUE,varkeep=c("v","thetarel"),
+#' zerovar=TRUE)
 #' #cross-validation for the same model (time consuming !)
-#' xytb<-modelRF(xytb,"actual",nob="-1",colin=T,varkeep=c("v","thetarel"),zerovar=T,rfcv=T)
+#' xytb<-modelRF(xytb,"actual",nob="-1",colin=TRUE,varkeep=c("v","thetarel"),
+#' zerovar=TRUE,rfcv=TRUE)
 #' 
 #'
 #' @seealso See \link[randomForest]{randomForest} and \link[randomForest]{rfcv}
 #' @name modelRF 
 #' @export
 modelRF<-function(xytb,type=c("actual","shifted"),nob="-1",
-		  colin=T,varkeep=c("v","dist","thetarel"),
-		  zerovar=T,rfcv=F,ntree=501,importance=T,...){
+		  colin=TRUE,varkeep=c("v","dist","thetarel"),
+		  zerovar=TRUE,rfcv=FALSE,ntree=501,importance=TRUE,...){
 	if(class(xytb)!="xytb"){ stop("invalid xytb object") }
 	if(!type%in%c("actual","shifted") | length(type)!=1){
 	 stop("invalid type")
 	}
-	if(type=="actual"){ dat0<-cbind(xytb@b,xytb@dxyt) }
-	if(type=="shifted"){ dat0<-cbind(xytb@b,xytb@befdxyt) }
+	if(type=="actual"){ dat0<-cbind(xytb@b,xytb@dxyt,stringsAsFactors=F) }
+	if(type=="shifted"){ dat0<-cbind(xytb@b,xytb@befdxyt,stringsAsFactors=F) }
 	if(!nob%in%dat0$b){
 		stop("wrong no behavioural observation code")
 	}else{
-		idna<-as.numeric(attr(na.omit(dat0),"na.action"))
+		idna<-as.numeric(attr(stats::na.omit(dat0),"na.action"))
 		dat0$b[dat0$b==nob]<-NA
 		initdat0<-dat0
 	}
 	#remove NA value
 	print("removing lines with NA values")
-	dat0<-na.omit(dat0)
+	dat0<-stats::na.omit(dat0)
 	if(nrow(dat0)==0){stop("no data",call.=F)}
 	b0<-dat0$b
 	dat0<-dat0[,-1:-3]
 	#remove colinearity
 	if(colin){
 		print("removing colinearity among predictors")
-		idcolin<-caret::findCorrelation(cor(dat0),.9,verbose=F)
+		idcolin<-caret::findCorrelation(stats::cor(dat0),.9,verbose=F)
 		if(length(idcolin)>0){
 			print(paste(paste(varkeep,collapse=","),"keeped",collapse=" "))
 			idcolin<-idcolin[which(!names(dat0)[idcolin]%in%varkeep)]
@@ -595,17 +600,20 @@ modelRF<-function(xytb,type=c("actual","shifted"),nob="-1",
 			}
 		}
 	}
+	tabb<-table(b0)
+	#print(tabb)
+	#print(str(b0))
 	if(rfcv){
 		print("rfcv called")
-		xytb@rfcv<-rfcv(dat0,as.factor(b0),...)
+		#xytb@rfcv<-randomForest::rfcv(dat0,as.factor(b0),sampsize=rep(min(tabb),length(tabb)),...)
+		xytb@rfcv<-randomForest::rfcv(dat0,as.factor(b0),...)
 	}
 	#build and compute model
-	tabb<-table(b0)
-	rfFit<-randomForest(dat0,as.factor(b0),ntree=ntree,sampsize=rep(min(tabb),length(tabb)),
+	rfFit<-randomForest::randomForest(dat0,as.factor(b0),ntree=ntree,sampsize=rep(min(tabb),length(tabb)),
 		     importance=importance,...)
 	#prediction
 	initdat0[is.na(initdat0)]<-0
-	newb<-as.character(predict(rfFit,new=initdat0))
+	newb<-as.character(stats::predict(rfFit,new=initdat0))
 	newb[idna]<-"no data"
 	class(rfFit)<-c("list")
 	xytb@model<-rfFit
@@ -622,25 +630,23 @@ modelRF<-function(xytb,type=c("actual","shifted"),nob="-1",
 #' @seealso  See \link[randomForest]{randomForest}
 #' @author Laurent Dubroca
 #' @name extractRF
-#' @param xytb: an xytb object with a model.
+#' @param xytb an xytb object with a model.
 #' @return a randomForest object as defined by the randomForest package.
 #' @examples
-#' #a dataset
-#' str(track_CAGA_005)
+#' #track_CAGA_005 is dataset
 #' #generate a complete xytb object with derived (over moving windows of 3, 5
 #' #and 9 points, with quantile at 0, 50 and 100%) and shifted information on 10
 #' #and 100 points
-#' completexytb<-xytb(track_CAGA_005,"a track",c(3,5,9),c(0,.5,1),c(10,100))
+#' xytb<-xytb(track_CAGA_005,"a track",c(3,5,9),c(0,.5,1),c(10,100))
 #' #compute a random forest model to predict behaviour (b, where -1 is
 #' #unobserved behaviour) using the derived
 #' #parameters ("actual")
-#' xytb<-modelRF(xytb,"actual",nob="-1",colin=T,varkeep=c("v","thetarel"),zerovar=T)
+#' xytb<-modelRF(xytb,"actual",nob="-1",colin=TRUE,varkeep=c("v","thetarel"),zerovar=TRUE)
 #' #extract the model
 #' modRF<-extractRF(xytb)
 #' # results from randomForest package:
 #' print(modRF)
 #' plot(modRF)
-#' varImpPlot(modRF)
 #' @export
 extractRF<-function(xytb){
 	if(class(xytb)!="xytb"){ stop("invalid xytb object") }
@@ -658,8 +664,8 @@ extractRF<-function(xytb){
 #' @seealso  See \link[randomForest]{randomForest}
 #' @author Laurent Dubroca
 #' @name resRF 
-#' @param xytb : an xytb object with a model.
-#' @param type :
+#' @param xytb An xytb object with a model.
+#' @param type
 #' \itemize{
 #'   \item \code{rf}: plot of the OOB versus the number of trees (see \link[randomForest]{randomForest}).
 #'   \item \code{importance}: importance plot (see \link[randomForest]{varImpPlot}).
@@ -670,8 +676,7 @@ extractRF<-function(xytb){
 #'
 #' @return plots or tables.
 #' @examples
-#' #a dataset
-#' str(track_CAGA_005)
+#' #track_CAGA_005 is dataset
 #' #generate a complete xytb object with derived (over moving windows of 3, 5
 #' #and 9 points, with quantile at 0, 50 and 100%) and shifted information on 10
 #' #and 100 points
@@ -679,7 +684,8 @@ extractRF<-function(xytb){
 #' #compute a random forest model to predict behaviour (b, where -1 is
 #' #unobserved behaviour) using the derived
 #' #parameters ("actual")
-#' xytb<-modelRF(xytb,"actual",nob="-1",colin=T,varkeep=c("v","thetarel"),zerovar=T,rfcv=T,step=.9)
+#' xytb<-modelRF(xytb,"actual",nob="-1",colin=TRUE,varkeep=c("v","thetarel"),
+#' zerovar=TRUE,rfcv=TRUE,step=.9)
 #' #modelling results
 #' resRF(xytb,type="rf")
 #' resRF(xytb,type="importance")
@@ -701,7 +707,7 @@ resRF<-function(xytb,type="rf"){
 	if(type=="rfcv"){
 		testmtry<-xytb@rfcv
 		testmtry<-data.frame(n=testmtry$n.var,error=100*testmtry$error.cv,Model=xytb@desc)
-		p1<-ggplot(data=testmtry,aes(x=n,y=error,linetype=Model))+
+		p1<-ggplot2::ggplot(data=testmtry,aes(x=testmtry$n,y=testmtry$error,linetype=testmtry$Model))+
 			geom_line()+
 			coord_trans(x="log10")+
 			theme(legend.position=c(.8,.8))+
@@ -712,11 +718,11 @@ resRF<-function(xytb,type="rf"){
 		return(p1)
 	}
 	if(type=="importance"){
-		varImpPlot(modRF,type=1,n.var=20,main="")
+		randomForest::varImpPlot(modRF,type=1,n.var=20,main="")
 		ntree<-modRF$ntree
 		errOOB<-round(modRF$err.rate[ntree,1],3)*100
 		mtry<-modRF$mtry
-		title(paste0("Results: OOB error ",errOOB,"%/",ntree," trees/mtry ",mtry))
+		graphics::title(paste0("Results: OOB error ",errOOB,"%/",ntree," trees/mtry ",mtry))
 	}
 	if(type=="rf"){
 		pipo<-modRF$err.rate
@@ -726,7 +732,7 @@ resRF<-function(xytb,type="rf"){
 		  pipo2tmp$var<-attr(pipo,"dimnames")[[2]][i]
 		  pipo2<-rbind(pipo2,pipo2tmp)
 		}
-		p1<-ggplot(data=pipo2,aes(x=ntree,y=100*value,linetype=var))+
+		p1<-ggplot2::ggplot(data=pipo2,aes(x=pipo2$ntree,y=100*pipo2$value,linetype=pipo2$var))+
 		geom_line()+
 		ggtitle(paste0("Results: OOB error ",errOOB,"%/",ntree," trees/mtry ",mtry))+
 		xlab("Number of trees")+
@@ -735,7 +741,7 @@ resRF<-function(xytb,type="rf"){
 		return(p1)
 	}
 	if(type=="confusion"){
-	 confusionMatrix(modRF$predicted,modRF$y)
+	 caret::confusionMatrix(modRF$predicted,modRF$y)
 	}
 }
 
@@ -745,20 +751,19 @@ resRF<-function(xytb,type="rf"){
 #' @seealso  See \link[randomForest]{randomForest}
 #' @author Laurent Dubroca
 #' @name resB
-#' @param xytb: an xytb object with predicted behaviour.
-#' @param type:
+#' @param xytb an xytb object with predicted behaviour.
+#' @param type
 #' \itemize{
 #'   \item \code{time}: plot results in time.
 #'   \item \code{space}: plot results in space.
 #'   \item \code{density}: plot results in space, adding density surface by behaviour.
 #' }
-#' @param nob: character. Define the unobserved value of the behaviour (and
+#' @param nob character. Define the unobserved value of the behaviour (and
 #' where prediction are done)
 #'
 #' @return a ggplot 
 #' @examples
-#' #a dataset
-#' str(track_CAGA_005)
+#' #track_CAGA_005 is dataset
 #' #generate a complete xytb object with derived (over moving windows of 3, 5
 #' #and 9 points, with quantile at 0, 50 and 100%) and shifted information on 10
 #' #and 100 points
@@ -766,11 +771,13 @@ resRF<-function(xytb,type="rf"){
 #' #compute a random forest model to predict behaviour (b, where -1 is
 #' #unobserved behaviour) using the derived
 #' #parameters ("actual")
-#' xytb<-modelRF(xytb,"actual",nob="-1",colin=T,varkeep=c("v","thetarel"),zerovar=T,rfcv=F,step=.9)
+#' xytb<-modelRF(xytb,"actual",nob="-1",colin=TRUE,varkeep=c("v","thetarel"),
+#' zerovar=TRUE,rfcv=FALSE,step=.9)
 #' #behaviour results:
 #' resB(xytb,type="time",nob="-1")
 #' resB(xytb,type="space",nob="-1")
 #' resB(xytb,type="density",nob="-1")
+#' @import ggplot2
 #' @export
 resB<-function(xytb,type="time",nob="-1"){
 	if(any(is.na(type)) | length(type)>1){stop("Wrong type",call.=F)}
@@ -778,7 +785,7 @@ resB<-function(xytb,type="time",nob="-1"){
 	if(class(xytb)!="xytb"){ stop("invalid xytb object",call.=F) }
 	if(length(xytb@predb)==0){stop("No predicted behaviour in the object, please run randomRF first.",call.=F)}
 	if(length(xytb@b)==0){stop("No observed behaviour in the object, please build the xytb object wisely.",call.=F)}
-	if(!nob%in%xytb@b$b){ stop("Wrong no behavioural observation code") }
+	if(!nob%in%xytb@b$b){ stop("Wrong no behavioural observation code",call.=F) }
 	#new test
 	pipo1<-xytb@xyt
 	pipo1$b<-xytb@b$b
@@ -794,26 +801,26 @@ resB<-function(xytb,type="time",nob="-1"){
 	pipo<-pipo[pipo$b!="no data",]
 	#the plot
 	if(type=="time"){
-	p1<-ggplot(pipo,aes(x=t,y=b,group=id,color=type))+
+	p1<-ggplot2::ggplot(pipo,aes(x=pipo$t,y=pipo$b,group=pipo$id,color=pipo$type))+
 		geom_line(alpha=.8)+
 		xlab("time")+ylab("Behaviour")+
 		theme(legend.position="bottom")+
-		facet_grid(id~which,scale="free_x")
+		facet_grid(pipo$id~pipo$which,scales="free_x")
 	}
 	if(type=="space"){
-	p1<-ggplot(pipo,aes(x=x,y=y,group=type,color=b,shape=b))+
+	p1<-ggplot2::ggplot(pipo,aes(x=pipo$x,y=pipo$y,group=pipo$type,color=pipo$b,shape=pipo$b))+
 		geom_path(color="black")+
 		geom_point(alpha=.6)+
 		xlab("Longitude")+ylab("Latitude")+
-		facet_grid(id~which+type)
+		facet_grid(pipo$id~pipo$which+type)
 	}
 	if(type=="density"){
-	p1<-ggplot(pipo,aes(x=x,y=y,group=type,color=b,shape=b))+
+	p1<-ggplot2::ggplot(pipo,aes(x=pipo$x,y=pipo$y,group=pipo$type,color=pipo$b,shape=pipo$b))+
 		geom_path(color="black")+
 		geom_point(alpha=.6)+
-		geom_density2d(data=pipo,aes(x=x,y=y,color=b,group=b),alpha=.6)+
+		geom_density2d(data=pipo,aes(x=pipo$x,y=pipo$y,color=pipo$b,group=pipo$b),alpha=.6)+
 		xlab("Longitude")+ylab("Latitude")+
-		facet_grid(id~which+type)
+		facet_grid(pipo$id~pipo$which+pipo$type)
 	}
 	return(p1)
 }
@@ -831,7 +838,7 @@ run<-function(){
 
 library(m2b)
 xytb<-xytb(track_CAGA_005,"a track",c(3,5,9),c(0,.5,1),c(10,100))
-xytb<-modelRF(xytb,"actual",nob="-1",colin=T,varkeep=c("v","thetarel"),zerovar=T,rfcv=F,step=.9)
+xytb<-modelRF(xytb,"actual",nob="-1",colin=TRUE,varkeep=c("v","thetarel"),zerovar=TRUE,rfcv=FALSE,step=.9)
 #resRF(xytb,type="rf")
 #resRF(xytb,type="importance")
 #resRF(xytb,type="rfcv")
@@ -843,6 +850,21 @@ resB(xytb,type="density")
 resB(xytb,type="goubi")
 
 
+library(m2b)
+ xytb<-xytb(track_CAGA_005,"a track")#,c(3,5,9),c(0,.5,1),c(10,100))
+str(xytb@b)
+
+ xytb<-xytb(track_CAGA_005,"a track",c(3,5,9),c(0,.5,1),c(10,100))
+#' #compute a random forest model to predict behaviour (b, where -1 is
+#' #unobserved behaviour) using the derived
+#' #parameters ("actual")
+ xytb<-modelRF(xytb,"actual",nob="-1",colin=TRUE,varkeep=c("v","thetarel"),zerovar=TRUE)
+#' #extract the model
+ modRF<-extractRF(xytb)
+#' # results from randomForest package:
+ print(modRF)
+ plot(modRF)
+ varImpPlot(modRF)
 
 
 

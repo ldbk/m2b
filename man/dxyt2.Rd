@@ -6,10 +6,16 @@
 \usage{
 dxyt2(dxyt, winsize = seq(3, 13, 2), idquant = seq(0, 1, 0.25))
 }
+\arguments{
+\item{dxyt}{A parameter}
+
+\item{winsize}{A parameter}
+
+\item{idquant}{A parameter}
+}
 \description{
 internal function
 }
 \author{
 Laurent Dubroca
 }
-

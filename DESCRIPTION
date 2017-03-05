@@ -8,10 +8,14 @@ Depends:
     R (>= 3.3.0)
 Imports:
     caTools,
-    randomForest,
     ggplot2,
+    randomForest,
+    e1071,
     caret,
-    methods
+    methods,
+    graphics,
+    stats,
+    utils
 Suggests:
 	adehabitatLT
 License: CC0
@@ -25,4 +29,4 @@ Authors@R: c(person("Laurent","Dubroca",
 	role= c("aut"),
 	email="andrea.thiebault@gmail.com"))
 Maintainer: Laurent Dubroca <laurent.dubroca@gmail.com>
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

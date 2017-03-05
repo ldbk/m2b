@@ -9,4 +9,3 @@
 A package to compute behaviour and social interaction from
 movement data
 }
-

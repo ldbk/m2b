@@ -35,4 +35,3 @@ few hours of the track (then no behaviour data = -1). Device: GPS I-gotU
 (GT-600).Species: Cape Gannet breeding on Bird Island, Nelson Mandela Bay, South Africa
 }
 \keyword{datasets}
-

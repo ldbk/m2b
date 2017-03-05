@@ -4,39 +4,41 @@
 \alias{modelRF}
 \title{xytb randomForest function}
 \usage{
-modelRF(xytb, type = c("actual", "shifted"), nob = "-1", colin = T,
-  varkeep = c("v", "dist", "thetarel"), zerovar = T, rfcv = F,
-  ntree = 501, importance = T, ...)
+modelRF(xytb, type = c("actual", "shifted"), nob = "-1", colin = TRUE,
+  varkeep = c("v", "dist", "thetarel"), zerovar = TRUE, rfcv = FALSE,
+  ntree = 501, importance = TRUE, ...)
 }
 \arguments{
-\item{xytb:}{an xytb object}
+\item{xytb}{an xytb object}
 
-\item{type:}{character -actual or shifted- use actual data or shifted one to
+\item{type}{character -actual or shifted- use actual data or shifted one to
 build the model}
 
-\item{nob:}{character. Define the unobserved value of the behaviour (and
+\item{nob}{character. Define the unobserved value of the behaviour (and
 where prediction are done)}
 
-\item{colin:}{boolean - remove colinearity among predictors (see the caret
+\item{colin}{boolean - remove colinearity among predictors (see the caret
 package for more details)}
 
-\item{varkeep:}{character vector - the variables names in this vector are
+\item{varkeep}{character vector - the variables names in this vector are
 keeped in the model even if colinearity is found (usefull to keep 'classical'
 parameters and to help interpretation)}
 
-\item{zerovar:}{boolean - remove near zero variance predictor (see the caret
+\item{zerovar}{boolean - remove near zero variance predictor (see the caret
 package for more details)}
 
-\item{rfcv:}{boolean - run a random forest cross-validation for feature selection
+\item{rfcv}{boolean - run a random forest cross-validation for feature selection
 procedure for xybt (this call the \code{rfcv} fonction for the model).
 This function shows the cross-validated prediction performance of models 
 with sequentially reduced number of predictors (ranked by variable
 importance) via a nested cross-validation procedure for a xytb object.}
 
-\item{ntree:}{number of trees in the random Forest (see the randomForest
+\item{ntree}{number of trees in the random Forest (see the randomForest
 package for more details)}
 
-\item{importance:}{boolean (see the randomForest package for more details)}
+\item{importance}{boolean (see the randomForest package for more details)}
+
+\item{...}{other arguements passed to randonForest or rfcv}
 }
 \description{
 Build a random forest model on an xytb object, predicting behaviour using
@@ -45,25 +47,25 @@ are passed to the randomForest or the rfcv functions of the randomForest
 package if needed.
 }
 \examples{
-#a dataset
-str(track_CAGA_005)
+#track_CAGA_005 is dataset
 #generate a complete xytb object with derived (over moving windows of 3, 5
 #and 9 points, with quantile at 0, 50 and 100\%) and shifted information on 10
 #and 100 points
-completexytb<-xytb(track_CAGA_005,"a track",c(3,5,9),c(0,.5,1),c(10,100))
+xytb<-xytb(track_CAGA_005,"a track",c(3,5,9),c(0,.5,1),c(10,100))
 #compute a random forest model to predict behaviour (b, where -1 is
-unobserved behaviour) using the derived
-parameters ("actual")
-xytb<-modelRF(xytb,"actual",nob="-1",colin=T,varkeep=c("v","thetarel"),zerovar=T)
+#unobserved behaviour) using the derived
+#parameters ("actual")
+xytb<-modelRF(xytb,"actual",nob="-1",colin=TRUE,varkeep=c("v","thetarel"),
+zerovar=TRUE)
 #cross-validation for the same model (time consuming !)
-xytb<-modelRF(xytb,"actual",nob="-1",colin=T,varkeep=c("v","thetarel"),zerovar=T,rfcv=T)
+xytb<-modelRF(xytb,"actual",nob="-1",colin=TRUE,varkeep=c("v","thetarel"),
+zerovar=TRUE,rfcv=TRUE)
 
 
-}
-\author{
-Laurent Dubroca and Andréa Thiébault
 }
 \seealso{
 See \link[randomForest]{randomForest} and \link[randomForest]{rfcv}
 }
-
+\author{
+Laurent Dubroca and Andréa Thiébault
+}

@@ -7,9 +7,9 @@
 ltraj2xytb(ltraj, desc = "ltraj object convert to xytb")
 }
 \arguments{
-\item{ltraj:}{a ltraj object}
+\item{ltraj}{A ltraj object}
 
-\item{desc:}{general descriptor of the data}
+\item{desc}{General descriptor of the data}
 }
 \value{
 A xytb object with behavioural information taken from the infolocs
@@ -20,8 +20,7 @@ The function converts a ltraj object in an  xytb object
 (see \link{xytb-class}).
 }
 \examples{
-#a dataset:
-str(track_CAGA_005)
+#track_CAGA_005 is a dataset
 xytb<-xytb(track_CAGA_005,"a track",3,.5)
 ltraj<-xytb2ltraj(xytb)
 xytb2<-ltraj2xytb(ltraj,"a track")
@@ -29,4 +28,3 @@ xytb2<-ltraj2xytb(ltraj,"a track")
 \author{
 Laurent Dubroca
 }
-

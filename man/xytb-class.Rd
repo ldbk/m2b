@@ -10,9 +10,9 @@ xytb is an trajectory object with observed behaviour
 \section{Slots}{
 
 \describe{
-\item{\code{desc:}}{a character vector. A description of the data.}
+\item{\code{desc}}{a character vector. A description of the data.}
 
-\item{\code{xyt:}}{a data frame of the track information. One row is one position
+\item{\code{xyt}}{a data frame of the track information. One row is one position
 described by 11 variables :
 \tabular{ll}{
 id: \tab individual id\cr
@@ -31,7 +31,7 @@ thetarel: \tab the turning angle between successive moves.\cr
 }
 This slot is very similar to the ltraj class of the adehabitatLT package.}
 
-\item{\code{b:}}{a data frame of the observed behaviour related to the track. One row
+\item{\code{b}}{a data frame of the observed behaviour related to the track. One row
 is one behavioural observation related to the track described by 3 variables: 
 \tabular{ll}{
 id: \tab individual id\cr
@@ -39,17 +39,17 @@ t: \tab time in POSIXct\cr
 b: \tab observed behaviour (character)\cr
 }}
 
-\item{\code{dxyt:}}{a data frame of the derived information from the track.}
+\item{\code{dxyt}}{a data frame of the derived information from the track.}
 
-\item{\code{befdxyt:}}{a data frame of the derived information shifted back in time.}
+\item{\code{befdxyt}}{a data frame of the derived information shifted back in time.}
 
-\item{\code{model:}}{a randomForest model (see
+\item{\code{model}}{a randomForest model (see
 \link[randomForest]{randomForest}).}
 
-\item{\code{rfcv:}}{the output of the cross-validation procedure (see
+\item{\code{rfcv}}{the output of the cross-validation procedure (see
 \link[randomForest]{rfcv}).}
 
-\item{\code{predb:}}{a data frame of the predicted behaviour using the random forest
+\item{\code{predb}}{a data frame of the predicted behaviour using the random forest
 model of the slot model. 3 variables :
 \tabular{ll}{
 id: \tab individual id\cr
@@ -57,7 +57,7 @@ t: \tab time in POSIXct\cr
 b: \tab observed behaviour (character)\cr
 }}
 }}
+
 \author{
 Laurent Dubroca
 }
-

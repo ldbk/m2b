@@ -7,9 +7,9 @@
 resRF(xytb, type = "rf")
 }
 \arguments{
-\item{xytb:}{an xytb object with a model.}
+\item{xytb}{An xytb object with a model.}
 
-\item{type:}{\itemize{
+\item{type}{\itemize{
   \item \code{rf}: plot of the OOB versus the number of trees (see \link[randomForest]{randomForest}).
   \item \code{importance}: importance plot (see \link[randomForest]{varImpPlot}).
   \item \code{rfcv}: plot of the cross-validated prediction performance of models
@@ -24,26 +24,25 @@ plots or tables.
 Some results
 }
 \examples{
-#a dataset
-str(track_CAGA_005)
+#track_CAGA_005 is dataset
 #generate a complete xytb object with derived (over moving windows of 3, 5
 #and 9 points, with quantile at 0, 50 and 100\%) and shifted information on 10
 #and 100 points
 xytb<-xytb(track_CAGA_005,"a track",c(3,5,9),c(0,.5,1),c(10,100))
 #compute a random forest model to predict behaviour (b, where -1 is
-unobserved behaviour) using the derived
-parameters ("actual")
-xytb<-modelRF(xytb,"actual",nob="-1",colin=T,varkeep=c("v","thetarel"),zerovar=T,rfcv=T,step=.9)
+#unobserved behaviour) using the derived
+#parameters ("actual")
+xytb<-modelRF(xytb,"actual",nob="-1",colin=TRUE,varkeep=c("v","thetarel"),
+zerovar=TRUE,rfcv=TRUE,step=.9)
 #modelling results
 resRF(xytb,type="rf")
 resRF(xytb,type="importance")
 resRF(xytb,type="rfcv")
 resRF(xytb,type="confusion")
 }
-\author{
-Laurent Dubroca
-}
 \seealso{
 See \link[randomForest]{randomForest}
 }
-
+\author{
+Laurent Dubroca
+}

@@ -7,7 +7,7 @@
 extractRF(xytb)
 }
 \arguments{
-\item{xytb:}{an xytb object with a model.}
+\item{xytb}{an xytb object with a model.}
 }
 \value{
 a randomForest object as defined by the randomForest package.
@@ -17,27 +17,24 @@ The random forest model is extracted from the xytb object and randomForest funct
 used on it.
 }
 \examples{
-#a dataset
-str(track_CAGA_005)
+#track_CAGA_005 is dataset
 #generate a complete xytb object with derived (over moving windows of 3, 5
 #and 9 points, with quantile at 0, 50 and 100\%) and shifted information on 10
 #and 100 points
-completexytb<-xytb(track_CAGA_005,"a track",c(3,5,9),c(0,.5,1),c(10,100))
+xytb<-xytb(track_CAGA_005,"a track",c(3,5,9),c(0,.5,1),c(10,100))
 #compute a random forest model to predict behaviour (b, where -1 is
-unobserved behaviour) using the derived
-parameters ("actual")
-xytb<-modelRF(xytb,"actual",nob="-1",colin=T,varkeep=c("v","thetarel"),zerovar=T)
+#unobserved behaviour) using the derived
+#parameters ("actual")
+xytb<-modelRF(xytb,"actual",nob="-1",colin=TRUE,varkeep=c("v","thetarel"),zerovar=TRUE)
 #extract the model
 modRF<-extractRF(xytb)
 # results from randomForest package:
 print(modRF)
 plot(modRF)
-varImpPlot(modRF)
-}
-\author{
-Laurent Dubroca
 }
 \seealso{
 See \link[randomForest]{randomForest}
 }
-
+\author{
+Laurent Dubroca
+}

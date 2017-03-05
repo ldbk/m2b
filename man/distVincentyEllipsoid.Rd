@@ -34,7 +34,7 @@ The method is computationally more intensive than the other great-circled method
 Function borrowed to the 'geosphere' package to attenuate packages' dependency.
 See this package and the function help for more details.
 }
+
 \author{
 Chris Veness and Robert Hijmans
 }
-
