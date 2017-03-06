@@ -62,7 +62,6 @@ some change in movement can be triggered by behavioural observation made
 afterward by the scientist but sooner by the animal.   
 
 ```{r data2,warn=FALSE,cache=TRUE,echo=TRUE}
-
 library(m2b)
 str(track_CAGA_005)
 #convert to xybt object with computation of windows operators and some quantiles
