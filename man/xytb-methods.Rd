@@ -11,8 +11,6 @@
 \alias{xytb,data.frame,character,vector,vector}
 \alias{xytb,data.frame,character,vector,vector,vector-method}
 \alias{xytb,data.frame,character,vector,vector,vector}
-\alias{plot,xytb,ANY-method}
-\alias{plot}
 \title{xytb class constructor}
 \usage{
 xytb(object, desc, winsize, idquant, move, ...)
@@ -28,8 +26,6 @@ xytb(object, desc, winsize, idquant, move, ...)
 \S4method{xytb}{data.frame,character,vector,vector,vector}(object,
   desc = "unknow track", winsize = seq(3, 13, 2), idquant = seq(0, 1,
   0.25), move = c(5, 10), ...)
-
-\S4method{plot}{xytb,ANY}(x)
 }
 \arguments{
 \item{object}{a data frame with 5 columns
@@ -57,8 +53,6 @@ back in time. For example if move=c(5,10,100), the parameters will be shifted
 backward by 5, 10 and 100 locations.}
 
 \item{...}{part of the generic definition}
-
-\item{x}{An xytb object.}
 }
 \value{
 an xytb object
@@ -66,8 +60,6 @@ an xytb object
 \description{
 The methods to build an xytb object (see \link{xytb-class} for the class
 description).
-
-xytb plot function
 }
 \section{Methods' signature}{
 

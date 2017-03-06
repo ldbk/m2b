@@ -482,17 +482,24 @@ shiftvalue<-function(dat0,mov=seq(5,250,5)){
   return(datadd)
 }
 
-#' xytb plot function
+#' xytb plot method 
+#'
+#' plot method for xytb object
 #'
 #' @param x An xytb object.
-#' @rdname xytb-methods
-#' @aliases plot
+#' @return a plot
+#' @name plot
+NULL
+
+#' @method plot xytb
 setMethod("plot",
 	  signature(x="xytb"),
 	  function(x){
-		  pipo<-data.frame(id=x@xyt$id,x=x@xyt$x,y=x@xyt$y,b=x@b$b,stringsAsFactors=F)	
-		  ggplot2::ggplot(pipo,aes(x=pipo$x,y=pipo$y,color=pipo$b,group=pipo$id))+geom_path()+facet_wrap(~id)+ggtitle(x@desc)
-
+		  pipo<-data.frame(id=x@xyt$id,x=x@xyt$x,y=x@xyt$y,b=x@b$b,stringsAsFactors=FALSE)	
+		  p1<-ggplot2::ggplot(pipo,ggplot2::aes(x=pipo$x,y=pipo$y,color=pipo$b,group=pipo$id))+
+		  	ggplot2::geom_path()+ggplot2::facet_wrap(~id)+
+			ggplot2::xlab("Longitude")+ggplot2::ylab("Latitude")+ggplot2::ggtitle(x@desc)
+		  return(p1)
 	  }
 	  )
 		
@@ -824,49 +831,3 @@ resB<-function(xytb,type="time",nob="-1"){
 	}
 	return(p1)
 }
-
-
-run<-function(){
-#library(dplyr)
-#dxyt<-track_CAGA_005%>%select(x,y,t,b)%>%mutate(b=as.character(b),id="pipo")
-#xytb<-xytb(dxyt,"pipo",3,.5)
-
-#dxyt<-dxyt(dxyt)
-#dxyt<-dxyt2(dxyt,3,.4)
-#pipo<-shiftvalue(dxyt,mov=c(5,10))
-#x<-pipo
-
-library(m2b)
-xytb<-xytb(track_CAGA_005,"a track",c(3,5,9),c(0,.5,1),c(10,100))
-xytb<-modelRF(xytb,"actual",nob="-1",colin=TRUE,varkeep=c("v","thetarel"),zerovar=TRUE,rfcv=FALSE,step=.9)
-#resRF(xytb,type="rf")
-#resRF(xytb,type="importance")
-#resRF(xytb,type="rfcv")
-#resRF(xytb,type="confusion")
-#resRF(xytb,type="gloubi")
-resB(xytb,type="time")
-resB(xytb,type="space")
-resB(xytb,type="density")
-resB(xytb,type="goubi")
-
-
-library(m2b)
- xytb<-xytb(track_CAGA_005,"a track")#,c(3,5,9),c(0,.5,1),c(10,100))
-str(xytb@b)
-
- xytb<-xytb(track_CAGA_005,"a track",c(3,5,9),c(0,.5,1),c(10,100))
-#' #compute a random forest model to predict behaviour (b, where -1 is
-#' #unobserved behaviour) using the derived
-#' #parameters ("actual")
- xytb<-modelRF(xytb,"actual",nob="-1",colin=TRUE,varkeep=c("v","thetarel"),zerovar=TRUE)
-#' #extract the model
- modRF<-extractRF(xytb)
-#' # results from randomForest package:
- print(modRF)
- plot(modRF)
- varImpPlot(modRF)
-
-
-
-}
-
