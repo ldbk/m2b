@@ -178,9 +178,9 @@ ltraj2xytb<-function(ltraj,desc="ltraj object convert to xytb"){
 #' 	numerical vector,numerical vector)}: generate an xytb object with track
 #' 	information (slots \code{desc}, \code{xyt}, \code{b}) and derived
 #' 	information \code{dxyt} and
-#' 	\code{befdxyt}. \code{dxyt} contains statistical derivates of speed, distance and
+#' 	\code{befdxyt}. \code{dxyt} contains statistical derivatives of speed, distance and
 #' 	relative angle calculated on moving windows given by the winsize
-#' 	parameters. Statistical derivates are standard deviation, mean, median
+#' 	parameters. Statistical derivatides are standard deviation, mean, median
 #' 	absolute deviation and quantiles. Quantiles are defined by the
 #' 	\code{idquant}
 #' 	parameters. \code{befdxyt} contains \code{dxyt} values shifted back in
@@ -487,17 +487,23 @@ shiftvalue<-function(dat0,mov=seq(5,250,5)){
 #' plot method for xytb object
 #'
 #' @param x An xytb object.
+#' @param y empty 
 #' @return a plot
+#' @docType methods
+#' @rdname plot-methods
 #' @name plot
 NULL
 
-#' @method plot xytb
+# @method plot xytb
+#' @rdname plot-methods
+#' @export
 setMethod("plot",
-	  signature(x="xytb"),
-	  function(x){
+	  signature(x="xytb",y="missing"),
+	  function(x,y){
 		  pipo<-data.frame(id=x@xyt$id,x=x@xyt$x,y=x@xyt$y,b=x@b$b,stringsAsFactors=FALSE)	
 		  p1<-ggplot2::ggplot(pipo,ggplot2::aes(x=pipo$x,y=pipo$y,color=pipo$b,group=pipo$id))+
 		  	ggplot2::geom_path()+ggplot2::facet_wrap(~id)+
+			ggplot2::scale_colour_discrete(name="Behaviour")+#guide_legend(title="type")+
 			ggplot2::xlab("Longitude")+ggplot2::ylab("Latitude")+ggplot2::ggtitle(x@desc)
 		  return(p1)
 	  }
@@ -812,12 +818,15 @@ resB<-function(xytb,type="time",nob="-1"){
 		geom_line(alpha=.8)+
 		xlab("time")+ylab("Behaviour")+
 		theme(legend.position="bottom")+
+		scale_colour_discrete(name="type")+#guide_legend(title="type")+
 		facet_grid(pipo$id~pipo$which,scales="free_x")
 	}
 	if(type=="space"){
 	p1<-ggplot2::ggplot(pipo,aes(x=pipo$x,y=pipo$y,group=pipo$type,color=pipo$b,shape=pipo$b))+
 		geom_path(color="black")+
 		geom_point(alpha=.6)+
+		scale_colour_discrete(name="Behaviour")+#guide_legend(title="type")+
+		scale_shape_discrete(name="Behaviour")+#guide_legend(title="type")+
 		xlab("Longitude")+ylab("Latitude")+
 		facet_grid(pipo$id~pipo$which+type)
 	}
@@ -826,6 +835,8 @@ resB<-function(xytb,type="time",nob="-1"){
 		geom_path(color="black")+
 		geom_point(alpha=.6)+
 		geom_density2d(data=pipo,aes(x=pipo$x,y=pipo$y,color=pipo$b,group=pipo$b),alpha=.6)+
+		scale_colour_discrete(name="Behaviour")+#guide_legend(title="type")+
+		scale_shape_discrete(name="Behaviour")+#guide_legend(title="type")+
 		xlab("Longitude")+ylab("Latitude")+
 		facet_grid(pipo$id~pipo$which+pipo$type)
 	}

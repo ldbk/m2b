@@ -71,9 +71,9 @@ description).
 	numerical vector,numerical vector)}: generate an xytb object with track
 	information (slots \code{desc}, \code{xyt}, \code{b}) and derived
 	information \code{dxyt} and
-	\code{befdxyt}. \code{dxyt} contains statistical derivates of speed, distance and
+	\code{befdxyt}. \code{dxyt} contains statistical derivatives of speed, distance and
 	relative angle calculated on moving windows given by the winsize
-	parameters. Statistical derivates are standard deviation, mean, median
+	parameters. Statistical derivatides are standard deviation, mean, median
 	absolute deviation and quantiles. Quantiles are defined by the
 	\code{idquant}
 	parameters. \code{befdxyt} contains \code{dxyt} values shifted back in
