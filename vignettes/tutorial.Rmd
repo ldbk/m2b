@@ -1,6 +1,6 @@
 ---
 title: "m2b tutorial"
-author: "Laurent Dubroca, Andréa Thiébault"
+author: "Laurent Dubroca, Andréa Thiebault"
 date: "`r Sys.Date()`"
 output: html_vignette
 bibliography: '/home/moi/datahome/work/biblio/enfin/biblioloran.bib'

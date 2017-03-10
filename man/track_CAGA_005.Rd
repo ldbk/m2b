@@ -17,7 +17,7 @@ t = time in POSIXct
 b = behaviour observed on video data (3:flying 100\%, 2:sitting on water 100\%,
 1:diving 100\%,-1:no data)}
 \source{
-Andréa Thiébault
+Andréa Thiebault
 }
 \usage{
 track_CAGA_005
