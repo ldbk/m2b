@@ -141,6 +141,51 @@ ltraj2xytb<-function(ltraj,desc="ltraj object convert to xytb"){
 	return(xytb)
 }
 
+#' xytb object conversion to moveHMM object 
+#'
+#' The function converts a xytb object in an moveHMM dataframe 
+#' (see \link[moveHMM]{prepData}).
+#'
+#' @param xytb A xytb object
+#' @return A dataframe ready to be used by the function of the `moveHMM`
+#' @examples
+#' #track_CAGA_005 is a dataset
+#' xytb<-xytb(track_CAGA_005,"a track",3,.5)
+#' xyhmm <-xytb2hmm(xytb)
+#' #then you can use moveHMM functions
+#' if(requireNamespace("moveHMM")){
+#' 	plot(xyhmm)
+#' }
+#' @author Laurent Dubroca
+#' @name xytb2hmm 
+#' @export
+xytb2hmm<-function(xytb){
+	if(!requireNamespace("moveHMM", quietly = TRUE)){
+	 stop("moveHMM needed for this function to work. Please install it.",call.=FALSE)
+	}
+	if(class(xytb)!="xytb"){stop("the object is not an xytb object")}
+	xy<-xytb@xyt
+	xy<-data.frame(ID=xy$id,x=xy$x,y=xy$y)
+	rez<-moveHMM::prepData(xy)
+	return(rez)
+}
+
+#' internal test function for dev purposes
+#'
+#' blablablablbalalb
+#'
+#' @keywords internal
+test<-function(){
+	#library(m2b)
+	#library(moveHMM)
+	#Examples
+	#' #track_CAGA_005 is a dataset
+	library(m2b)
+	 xytb<-xytb(track_CAGA_005,"a track",3,.5)
+	xyhmm<-xytb2hmm(xytb)
+	plot(xyhmm)
+}
+
 
 
 #' xytb class constructor

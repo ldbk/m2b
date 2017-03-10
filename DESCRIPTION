@@ -17,8 +17,10 @@ Imports:
     stats,
     utils
 Suggests:
-	adehabitatLT
-License: CC0
+	adehabitatLT,
+	moveHMM
+License: GPL-3
+URL: https://github.com/ldbk/m2b
 Encoding: UTF-8
 LazyData: true
 Date: 2017-04-03
