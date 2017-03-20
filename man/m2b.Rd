@@ -6,6 +6,6 @@
 \alias{m2b-package}
 \title{Movement to behaviour package}
 \description{
-A package to compute behaviour and social interaction from
+A package to infer behaviour and social interaction from
 movement data
 }

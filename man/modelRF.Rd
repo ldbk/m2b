@@ -41,9 +41,9 @@ package for more details)}
 \item{...}{other arguements passed to randonForest or rfcv}
 }
 \description{
-Build a random forest model on an xytb object, predicting behaviour using
-regular observation (type actual) or shifted one (type shifted). Parameters
-are passed to the randomForest or the rfcv functions of the randomForest
+Build a random forest model on a xytb object, predicting behaviour using
+regular observation (type `actual`) or shifted one (type `shifted`). Parameters
+are transfered to the randomForest or the rfcv functions of the randomForest
 package if needed.
 }
 \examples{
@@ -67,5 +67,5 @@ zerovar=TRUE,rfcv=TRUE)
 See \link[randomForest]{randomForest} and \link[randomForest]{rfcv}
 }
 \author{
-Laurent Dubroca and Andréa Thiébault
+Laurent Dubroca and Andréa Thiebault
 }

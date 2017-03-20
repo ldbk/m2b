@@ -2,7 +2,7 @@
 % Please edit documentation in R/xytb-class.R
 \name{resRF}
 \alias{resRF}
-\title{Results output for the model of a xytb object}
+\title{Random forest model outputs for a xytb object}
 \usage{
 resRF(xytb, type = "rf")
 }
@@ -21,7 +21,10 @@ with sequentially reduced number of predictors (see \link[randomForest]{rfcv}).
 plots or tables.
 }
 \description{
-Some results
+Diagnostic plots and tables for the random forest model used to predict behaviour on a
+xytb objecti (random forest convergence plot, variable importance plot,
+cross-validation plot, confusion matrix of the observed vs predicted
+behaviours).
 }
 \examples{
 #track_CAGA_005 is dataset

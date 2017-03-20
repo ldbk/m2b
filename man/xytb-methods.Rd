@@ -39,18 +39,18 @@ b \tab behaviour \tab character \cr
 
 \item{desc}{vector of character describing the dataset}
 
-\item{winsize}{a numerical vector giving the lenght of the windows used to
+\item{winsize}{a numerical vector giving the length of the windows used to
 calculate moving standard deviation, average, mad and quantile for the speed
 (v), the distance (dist) and the relative angle (thetarel).}
 
-\item{idquant}{a numerical vector giving the quantiles. For example if
-idquant=c(0,0.25,.5,1), the quantiles at 0% (min), 25% (first
-quartile), 50% (median) and 100% (max) will be
+\item{idquant}{a numerical vector giving the quantiles to be calculated. For example if
+idquant=c(0,0.25,.5,1), the quantiles at 0\% (min), 25\% (first
+quartile), 50\% (median) and 100\% (max) will be
 calculated.}
 
-\item{move}{a numerical vector giving the shift used to computed parameters
+\item{move}{a numerical vector providing the shift used to computed parameters
 back in time. For example if move=c(5,10,100), the parameters will be shifted
-backward by 5, 10 and 100 locations.}
+backward by 5, 10 and 100 locations. Optional.}
 
 \item{...}{part of the generic definition}
 }

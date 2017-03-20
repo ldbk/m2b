@@ -17,7 +17,9 @@ A xytb object with behavioural information taken from the infolocs
 }
 \description{
 The function converts a ltraj object in an  xytb object 
-(see \link{xytb-class}).
+(see  
+\url{https://cran.r-project.org/web/packages/adehabitatLT/index.html}
+and \link{xytb-class}).
 }
 \examples{
 #track_CAGA_005 is a dataset

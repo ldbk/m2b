@@ -25,34 +25,47 @@ assess the link between given variables from a fully informed training
 dataset and then predict the values on a non-informed variable. We chose the
 random forest algorithm for its capacity to deal with imbalanced data
 (particularly relevant for behavioural data), its high prediction accuracy
-and its ease of implementationi (@breiman2001b, @chen2004). 
+and its ease of implementation (@breiman2001b, @chen2004). 
 The strength of random forest partly relies
 in its ability to handle a very large number of variables. Hence, our
 methodology is based on the derivation of multiple predictor variables from
 the movement data over various temporal scales, in order to capture as much
 information as possible on the changes and variations of movement.
 
-In this tutorial, the link between behaviour and movement parameters is build
-using a random forest model based on a seabird track with behavioural
-observation made by a video camera deployed on the individual. A new class named
-`xytb` is implemented in order to provide to the user an object where data,
-derived information, modelling and results are included in a single object.
+In this package we developed a method to link the movement patterns of animals
+with their behaviour, using the random forest algorithm. The specificity of this
+method relies on the derivation of multiple predictor variables from the
+movement data over a range of temporal windows. This procedure allows to capture
+as much information as possible on the changes and variations of movement and
+ensures the use of the random forest algorithm to its best capacity. The method
+is very generic, applicable to any dataset providing movement data together with
+observation of behaviour for a subset of the dataset.
+
+This tutorial presents a new class named `xytb` and the functions that were
+implemented for the use of this package, as well as an example of application.
+The package can be installed using the CRAN system (`install.package("m2b")`),
+but the development version can be found on github
+(\url{https://github.com/ldbk/m2b}).
 
 #A new class
 
-`xytb` is a S4 class built to give the whole information related to a track (the track itself, the differentiation of the track parameters, 
-the observed behaviour, the model and the prediction) in a single object. 
-`xyt` stands for the track information, and `b` for the behaviour.
-8 slots contains these information, and different methods are available to build
-the different part of the object. The rationale behind this object is the possibility 
-to keep everything (data, model and prediction) in the same container, and by
-extension the possibility (1) to keep track of how precisely the prediction were
-made and (2) to exchange the analyses with different users easily.
+
+`xytb` is a S4 class built to provide in a single object all the information
+associated to a track. This includes the tracking data (two dimension space
+coordinates, time and observed behaviours), the predictor variables derived from
+the movement data, the resulting model (to be used on other datasets) and the
+prediction (predicted behaviours on the given dataset). 
+`xyt` relates to information about the movement data, and `b` to the behaviour. 
+These information are containted into 8 slots, each of them deriving from
+different methods and functions (see Figure 1 for details). This object was
+created for the user to keep everything (data, model and prediction) in a single
+container,but also, by 
+extension, for the user to (1) keep track of the precision of the model
+predictions and (2) exchange the analyses and results with different users
+easily. 
 
 
-
-
-```{r diag,warn=FALSE,cache=TRUE,echo=FALSE,fig.cap="Schematic of the work flow from fieldwork to the results. The legend gives the representation of the different objects. The arrows between the boxes represent the use of the package functions and methods: in blue the computation of the data, in red the modelling, in green the outputs and in pink the export to the ltraj format (adehabitat package). The dotted lines between the xytb class and the R objects describe the slot of the class."}
+```{r diag,warn=FALSE,cache=TRUE,echo=FALSE,fig.cap="Schematic of the work flow from the raw data to the results. The `legend` box provides the symbolic representation (shape and color) of the different objects. The arrows between boxes represent the use of the package functions and methods: in blue the computation of the data, in red the modelling, in green the outputs and in pink the export to the ltraj format (adehabitat package). The diamond boxes inside the `xytb object` box represent the slots of the classi (dotted lines link the xytb class and the slots). Diagram generated using Graphviz."}
 DiagrammeR::grViz("
 	digraph rmarkdown {
 	graph[center=true,ratio=auto,rankdir=TD,compound=true];
@@ -111,6 +124,8 @@ DiagrammeR::grViz("
 
 	ltraj[label='ltraj object',shape=diamond];
 	xytb->ltraj[color=pink,dir=both];
+	hmm[label='moveHMM object',shape=diamond];
+	xytb->hmm[color=pink,dir=both];
 
 	subgraph cluster100 {
 		label='Legend'
@@ -120,8 +135,8 @@ DiagrammeR::grViz("
 		fun[label='Functions\n& Methods',color=white];
 		leg1[label='xytb()',color=blue,fontcolor=blue];
 		leg2[label='modelRF()',color=red,fontcolor=red];
-		leg3[label='resRF()\nand resB()',color=green,fontcolor=green];
-		leg4[label='xytb2ltraj()\nand ltraj2xytb()',color=pink,fontcolor=pink];
+		leg3[label='resRF()\n resB()',color=green,fontcolor=green];
+		leg4[label='xytb2ltraj()\n ltraj2xytb()\n xytb2hmm()',color=pink,fontcolor=pink];
 		fun->leg1[color=blue];
 		fun->leg2[color=red];
 		fun->leg3[color=green];
@@ -138,63 +153,90 @@ DiagrammeR::grViz("
 
 #Methods and function overview
 
-The different analytical steps are summarized in 4 main functions and methods. 
+The analytical steps are summarized in 4 main functions and methods. 
 
 ##`xytb`
-`xytb` is a class, but also a method. 4 distincts signature help the user to load 
-tracks and behavioural information in the object. During this step, 
-derivated information of the track are computed and stored in the slot `dxyt`
-and `befdxyt`. The parameter `winsize` and `idquant` let the user to specify the
-windows on which to compute statistical operator, and some of them (the
-quantiles mainly).
+`xytb` is a class, but also a method. 4 distinct signatures help the user to load 
+trackings and behavioural data in the object. 
+For a full description of the use of the functions, please refer to the help
+provided for each function. 
+During this step, 
+derivated information on the movement data are computed and stored in the slots `dxyt`
+and `befdxyt`. 
+
+Three parameters can be set by the user: `winsize` specifies the 
+sizes of sliding windows on which to compute the statistical operators, idquant'
+specifies the quantiles to be computed, and 'move' (optional) specifies the
+number of points for the calculated variables to be shifted backward. If included,
+the latter parameter will account for a delay between the  reaction of the
+animal captured in the movement data, and its behaviour as recorded by the
+observer. In all cases, the original data are not modified, but derivated data
+are saved in the corresponding slots.
+
 
 ##`modelRF`
 
-This function compute a random forest model to predict the behavioural
-observation against the movement information. 
+This function computes a random forest model to predict the behavioural 
+observation fromthe movement data. This is a simple wrapper calling the
+randomForest function from the randomForest package
+(\url{https://cran.r-project.org/web/packages/randomForest/index.html}), 
+using the behavioural observations as a response, and the calculated movement
+variables as predictors.
 
 ##`resRF` and `resB`
-These two functions compute and plot the results related to the model (`resRF`)
-and the behaviours (prediction vs observation, `resB`).
+These two functions compute and plot the results related to the model (error
+rate and convergence of the model `resRF`)
+and the predicted behaviours (prediction vs observation over time or space, `resB`).
 
 ##`xytb2ltraj` and `ltraj2xytb`
 
-These functions import or export an `xytb` object to the `ltraj` class. This
-class is linked to the `adehabitatLT` package and the numerous function
-dedicated to trajectories analyses (see @calenge2008).
+These functions import or export an `xytb` object to the `ltraj` class. The
+latter is used in the `adehabitatLT` package and numerous function
+dedicated to the analysis of trajectories (see @calenge2008).
 
+##`xytb2hmm` 
+
+This function import an `xytb` object to the `moveHMM` class. The
+latter is used in the `moveHMM` package and provide function
+dedicated to the analysis of trajectories using hidden Markov models (see @michelot2016).
 
 #An example
 
 ##Data
 
-The data frame `track_CAGA_005` contains the information the track and the
-behavioural observation made on a gannet. Behavioural state at `-1` are
-unobserved behaviours. This parameters has to be passed to the functions during
-the analysis (see functions' help).
+The data frame `track_CAGA_005` contains the tracking and behavioural data
+collected from a Cape gannet (\emph{Morus capensis}, Lichtenstein 1823). Tracking data
+include latitude, longitude and time (class POSIXct). Behavioural data include
+three states coded as '1' (bird diving), '2' (bird sitting on the water), '3'
+(bird flying), and a state `-1`  for data points where the behaviour could not
+be observed. This parameters has to be passed to the functions during 
+the analysis: the parameter `nob` is equal to '-1' in our case (see functions' help). 
 
 ```{r data1,warn=FALSE,cache=TRUE,echo=TRUE}
 library(m2b)
 str(track_CAGA_005)
 ```
-
-Different methods are available to build a `xytb` object. Here, the track and
-behavioural information are taken from the data.frame, and derived information
-related to the track are computed in the same time. The derived information are
-computed on the moving windows of 3, 5, 7, 9, 11, 13 and 15 locations (the
-`winsize` parameters), and with the standard statistical operators (mean, standard deviation
-and median absolute deviation) available in the methods, the quantile at 0, 25,
-50, 75 and 100\% are added (the `idquant` parameter). Then these values are
-shifted back in time at 5, 10 and 15 points backward (the `move` parameter), in
-order to build a dataset of predictor back in time. This is useful if the user
-is interested to investigate the link of the observed behaviour with previous
-movement events. The rationale behind this operation is based on the fact that
+Different methods are available to build a `xytb` objec. Here, the tracking and 
+behavioural data are directly taken from the dataframe, and the predictor
+variables deriving from the tracking data are computed at the same time using
+the function `xytb`. The variables are 
+computed over sliding  windows of sizes 3, 5, 7, 9, 11, 13 and 15 locations (the 
+`winsize` parameter). In addition to the standard statistical operators (mean,
+standard deviation 
+and median absolute deviation), the quantiles at 0, 25, 
+50, 75 and 100\% are computed (the `idquant` parameter). All those values
+calculated can be 
+then shifted in time to 5, 10 and 15 points backwards (the `move` parameter), if
+the user is interested to investigate the effect of the delay
+between the  reaction
+of the animal captured in the movement data, and its behaviour as recorded by
+the observer.
+The rationale behind this operation is based on the fact that
 some change in movement can be triggered by behavioural observation made
 afterward by the scientist but sooner by the animal.   
 
-```{r data2,warn=FALSE,cache=TRUE,echo=TRUE}
+```{r data2,warning=FALSE,cache=TRUE,echo=TRUE}
 library(m2b)
-str(track_CAGA_005)
 #convert to xybt object with computation of windows operators and some quantiles
 xytb<-xytb(track_CAGA_005,desc="example track",
 	 winsize=seq(3,15,2),idquant=seq(0,1,.25),move=c(5,10,15))
@@ -202,28 +244,34 @@ xytb<-xytb(track_CAGA_005,desc="example track",
 plot(xytb)
 ```
 
-#Environnement
+#Modelling
 
-##Modelling
+##Model
 
 To build a random forest predicting the behavioural states based on the movement
 information, the function `modelRF` is used. It's a simple wrapper calling the 
 `randomForest` function of the `randomForest` package, using the behavioural
 observation as response, and movement information as predictors.
-Some diagnosis are available to check the results using the `resRF` function,
-but the function `extractRF` made the model available in the `randomForest`
-format, and let the use of the other function of the `randomForest` package.
+
 
 ```{r model1,warn=FALSE,cache=TRUE,echo=TRUE}
-#a model (the function modelRF update the model inside the xytb object)
+#a model (the function modelRF updates the model inside the xytb object)
 xytb<-modelRF(xytb,type="actual",ntree=501,mtry=15)
 ```
 
+##Results
+
+Some diagnostic plots are available using the `resRF` function to check the fit
+of the model.
+The function `extractRF` made the model available in the `randomForest`
+format, and let the use of the other function of the `randomForest` package.
+
 ```{r model2,warn=FALSE,cache=TRUE,echo=TRUE}
 resRF(xytb)
+resRF(xytb,"importance")
+resRF(xytb,"confusion")
 ```
 
-##Results
 
 The results regarding the behavioural states predicted vs the one observed are
 illustrated thanks to the `resB` functions.
@@ -231,6 +279,7 @@ illustrated thanks to the `resB` functions.
 ```{r res1,warn=FALSE,cache=TRUE,echo=TRUE}
 resB(xytb,"time",nob="-1")
 resB(xytb,"space",nob="-1")
+resB(xytb,"density",nob="-1")
 ```
 
 #Bibliography

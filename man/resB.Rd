@@ -2,7 +2,7 @@
 % Please edit documentation in R/xytb-class.R
 \name{resB}
 \alias{resB}
-\title{Results for the predicted vs observed behaviour of an xytb object}
+\title{Representation of the predicted vs observed behaviour of an xytb object}
 \usage{
 resB(xytb, type = "time", nob = "-1")
 }
@@ -22,7 +22,7 @@ where prediction are done)}
 a ggplot
 }
 \description{
-Results for the predicted vs observed behaviour of an xytb object
+Representation of the predicted vs observed behaviour of an xytb object
 }
 \examples{
 #track_CAGA_005 is dataset

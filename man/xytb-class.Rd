@@ -5,7 +5,7 @@
 \alias{xytb-class}
 \title{xytb class definition}
 \description{
-xytb is an trajectory object with observed behaviour
+xytb is a trajectory object with observed behaviour
 }
 \section{Slots}{
 
@@ -39,9 +39,9 @@ t: \tab time in POSIXct\cr
 b: \tab observed behaviour (character)\cr
 }}
 
-\item{\code{dxyt}}{a data frame of the derived information from the track.}
+\item{\code{dxyt}}{a data frame of the derived variables from the track.}
 
-\item{\code{befdxyt}}{a data frame of the derived information shifted back in time.}
+\item{\code{befdxyt}}{a data frame of the derived variables shifted back in time.}
 
 \item{\code{model}}{a randomForest model (see
 \link[randomForest]{randomForest}).}

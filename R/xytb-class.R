@@ -1,6 +1,6 @@
 #' xytb class definition 
 #'
-#' xytb is an trajectory object with observed behaviour
+#' xytb is a trajectory object with observed behaviour
 #'
 #' @slot desc a character vector. A description of the data.
 #'
@@ -31,9 +31,9 @@
 #' b: \tab observed behaviour (character)\cr
 #' }
 #'
-#' @slot dxyt a data frame of the derived information from the track. 
+#' @slot dxyt a data frame of the derived variables from the track. 
 #'
-#' @slot befdxyt a data frame of the derived information shifted back in time. 
+#' @slot befdxyt a data frame of the derived variables shifted back in time. 
 #'
 #' @slot model a randomForest model (see
 #' \link[randomForest]{randomForest}).
@@ -79,7 +79,9 @@ setClass(Class='xytb',
 #' xytb class conversion to ltraj object 
 #'
 #' The function converts a xytb object in ltraj object as defined in the
-#' adehabitatLT package (see \link[adehabitatLT]{as.ltraj}).
+#' adehabitatLT package (see 
+#' \url{https://cran.r-project.org/web/packages/adehabitatLT/index.html}
+#' \link[adehabitatLT]{as.ltraj}).
 #'
 #' @param xytb An xytb object
 #' @return A ltraj object with behavioural information recorded in the infoloc
@@ -107,7 +109,9 @@ xytb2ltraj<-function(xytb){
 #' ltraj object conversion to xytb object 
 #'
 #' The function converts a ltraj object in an  xytb object 
-#' (see \link{xytb-class}).
+#' (see  
+#' \url{https://cran.r-project.org/web/packages/adehabitatLT/index.html}
+#' and \link{xytb-class}).
 #'
 #' @param ltraj A ltraj object
 #' @param desc General descriptor of the data
@@ -144,7 +148,9 @@ ltraj2xytb<-function(ltraj,desc="ltraj object convert to xytb"){
 #' xytb object conversion to moveHMM object 
 #'
 #' The function converts a xytb object in an moveHMM dataframe 
-#' (see \link[moveHMM]{prepData}).
+#' (see 
+#' \url{https://cran.r-project.org/web/packages/moveHMM/index.html}
+#' and \link[moveHMM]{prepData}).
 #'
 #' @param xytb A xytb object
 #' @return A dataframe ready to be used by the function of the `moveHMM`
@@ -202,16 +208,16 @@ test<-function(){
 #' b \tab behaviour \tab character \cr
 #' }
 #' @param desc vector of character describing the dataset
-#' @param winsize a numerical vector giving the lenght of the windows used to
+#' @param winsize a numerical vector giving the length of the windows used to
 #' calculate moving standard deviation, average, mad and quantile for the speed
 #' (v), the distance (dist) and the relative angle (thetarel).
-#' @param idquant a numerical vector giving the quantiles. For example if
-#' idquant=c(0,0.25,.5,1), the quantiles at 0% (min), 25% (first
-#' quartile), 50% (median) and 100% (max) will be
+#' @param idquant a numerical vector giving the quantiles to be calculated. For example if
+#' idquant=c(0,0.25,.5,1), the quantiles at 0\% (min), 25\% (first
+#' quartile), 50\% (median) and 100\% (max) will be
 #' calculated.
-#' @param move a numerical vector giving the shift used to computed parameters
+#' @param move a numerical vector providing the shift used to computed parameters
 #' back in time. For example if move=c(5,10,100), the parameters will be shifted
-#' backward by 5, 10 and 100 locations.
+#' backward by 5, 10 and 100 locations. Optional.
 #' @param ... part of the generic definition 
 #' 
 #' @section Methods' signature:
@@ -556,12 +562,12 @@ setMethod("plot",
 		
 #' xytb randomForest function
 #'
-#' Build a random forest model on an xytb object, predicting behaviour using
-#' regular observation (type actual) or shifted one (type shifted). Parameters
-#' are passed to the randomForest or the rfcv functions of the randomForest
+#' Build a random forest model on a xytb object, predicting behaviour using
+#' regular observation (type `actual`) or shifted one (type `shifted`). Parameters
+#' are transfered to the randomForest or the rfcv functions of the randomForest
 #' package if needed.
 #'
-#' @author Laurent Dubroca and Andréa Thiébault
+#' @author Laurent Dubroca and Andréa Thiebault
 #'
 #' @param xytb an xytb object
 #' @param type character -actual or shifted- use actual data or shifted one to
@@ -715,9 +721,12 @@ extractRF<-function(xytb){
 }
 
 
-#' Results output for the model of a xytb object
+#' Random forest model outputs for a xytb object
 #'
-#' Some results
+#' Diagnostic plots and tables for the random forest model used to predict behaviour on a
+#' xytb objecti (random forest convergence plot, variable importance plot,
+#' cross-validation plot, confusion matrix of the observed vs predicted
+#' behaviours).
 #'
 #' @seealso  See \link[randomForest]{randomForest}
 #' @author Laurent Dubroca
@@ -772,7 +781,6 @@ resRF<-function(xytb,type="rf"){
 			ggtitle(paste0("Results: OOB error ",errOOB,"%/",ntree," trees"))+
 			xlab("Number of variables")+
 			ylab("Classification error rate (%)")
-		print(p1)
 		return(p1)
 	}
 	if(type=="importance"){
@@ -792,10 +800,10 @@ resRF<-function(xytb,type="rf"){
 		}
 		p1<-ggplot2::ggplot(data=pipo2,aes(x=pipo2$ntree,y=100*pipo2$value,linetype=pipo2$var))+
 		geom_line()+
-		ggtitle(paste0("Results: OOB error ",errOOB,"%/",ntree," trees/mtry ",mtry))+
+		ggplot2::ggtitle(paste0("Results: OOB error ",errOOB,"%/",ntree," trees/mtry ",mtry))+
+		ggplot2::scale_linetype_discrete(name="Behaviours\nand OOB")+#guide_legend(title="type")+
 		xlab("Number of trees")+
 		ylab("OOB classification error rate (%)")
-		print(p1)
 		return(p1)
 	}
 	if(type=="confusion"){
@@ -804,7 +812,7 @@ resRF<-function(xytb,type="rf"){
 }
 
 
-#' Results for the predicted vs observed behaviour of an xytb object
+#' Representation of the predicted vs observed behaviour of an xytb object
 #'
 #' @seealso  See \link[randomForest]{randomForest}
 #' @author Laurent Dubroca
@@ -869,7 +877,7 @@ resB<-function(xytb,type="time",nob="-1"){
 	if(type=="space"){
 	p1<-ggplot2::ggplot(pipo,aes(x=pipo$x,y=pipo$y,group=pipo$type,color=pipo$b,shape=pipo$b))+
 		geom_path(color="black")+
-		geom_point(alpha=.6)+
+		geom_point(alpha=.4)+
 		scale_colour_discrete(name="Behaviour")+#guide_legend(title="type")+
 		scale_shape_discrete(name="Behaviour")+#guide_legend(title="type")+
 		xlab("Longitude")+ylab("Latitude")+

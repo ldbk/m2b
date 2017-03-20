@@ -14,7 +14,9 @@ A dataframe ready to be used by the function of the `moveHMM`
 }
 \description{
 The function converts a xytb object in an moveHMM dataframe 
-(see \link[moveHMM]{prepData}).
+(see 
+\url{https://cran.r-project.org/web/packages/moveHMM/index.html}
+and \link[moveHMM]{prepData}).
 }
 \examples{
 #track_CAGA_005 is a dataset
