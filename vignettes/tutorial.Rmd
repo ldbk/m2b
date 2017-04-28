@@ -39,10 +39,10 @@ movement data over a range of temporal windows. This procedure allows to capture
 as much information as possible on the changes and variations of movement and
 ensures the use of the random forest algorithm to its best capacity. The method
 is very generic, applicable to any dataset providing movement data together with
-observation of behaviour for a subset of the dataset.
+observation of behaviour.
 
-This tutorial presents a new class named `xytb` and the functions that were
-implemented for the use of this package, as well as an example of application.
+This tutorial presents a new class named `xytb`, the functions that were
+implemented for the use of this package, and an example of application.
 The package can be installed using the CRAN system (`install.package("m2b")`),
 but the development version can be found on github
 (\url{https://github.com/ldbk/m2b}).
@@ -153,21 +153,33 @@ DiagrammeR::grViz("
 
 #Methods and function overview
 
-The analytical steps are summarized in 4 main functions and methods. 
+The analytical procedure is summarized in 4 main functions and methods. 
+For a full description of the use of the functions, please refer to the help
+provided for each function.
 
 ##`xytb`
-`xytb` is a class, but also a method. 4 distinct signatures help the user to load 
+`xytb` is a class, but also a method. 
+Used as a function `xytb` will calculte the predictor variables and store all
+the data in a newly created `xytb` object.
+4 distinct signatures help the user to load 
 trackings and behavioural data in the object. 
-For a full description of the use of the functions, please refer to the help
-provided for each function. 
-During this step, 
-derivated information on the movement data are computed and stored in the slots `dxyt`
-and `befdxyt`. 
 
-Three parameters can be set by the user: `winsize` specifies the 
-sizes of sliding windows on which to compute the statistical operators, idquant'
-specifies the quantiles to be computed, and 'move' (optional) specifies the
-number of points for the calculated variables to be shifted backward. If included,
+The data must be presented in a dataframe with locations in lines, and 5
+variables in column: `x` the longitude, `y` the latitude, `t` the time in
+POSIXct format, `b` the observed behaviour and `id` the individual
+identification for the track.
+The function `xytb` can then be used with this dataframe as an input, so the
+predictor variables are calculated and stored in the slots `dxyt`
+and `befdxyt` of the `xytb` created object. 
+For the calculation of predictor
+variables, three parameters can be set: 
+
+- `winsize` specifies the sizes of sliding windows on which to compute the statistical operators,
+- `idquant` specifies the quantiles to be computed, 
+- `move` (optional) specifies the number of points for the calculated variables to be shifted backward.
+  
+
+If included,
 the latter parameter will account for a delay between the  reaction of the
 animal captured in the movement data, and its behaviour as recorded by the
 observer. In all cases, the original data are not modified, but derivated data
@@ -177,27 +189,32 @@ are saved in the corresponding slots.
 ##`modelRF`
 
 This function computes a random forest model to predict the behavioural 
-observation fromthe movement data. This is a simple wrapper calling the
+observations (response) from the movement data (predictors). This is a simple wrapper calling the
 randomForest function from the randomForest package
-(\url{https://cran.r-project.org/web/packages/randomForest/index.html}), 
-using the behavioural observations as a response, and the calculated movement
-variables as predictors.
+(\url{https://cran.r-project.org/web/packages/randomForest/index.html}). 
+This function will update the `xytb` object and store the outputs in the slots
+`rfcv` (cross-validation for the choice of the parameter `mtry`), `model`
+(model itself) and `predb` (predictions). Cross-validation has to be done
+independently to set up the `mtry` parameters for the model.
 
 ##`resRF` and `resB`
-These two functions compute and plot the results related to the model (error
-rate and convergence of the model `resRF`)
-and the predicted behaviours (prediction vs observation over time or space, `resB`).
+
+
+These two functions compute and plot the diagnostics and results of the model.
+The function `resRF` provides the error rate, the convergence of the model, a
+confusion matrix and the importance of variables. The function `resB` plots the
+predictions vs observations, over time or space.
 
 ##`xytb2ltraj` and `ltraj2xytb`
 
-These functions import or export an `xytb` object to the `ltraj` class. The
-latter is used in the `adehabitatLT` package and numerous function
-dedicated to the analysis of trajectories (see @calenge2008).
+These functions import or export a `xytb` object to an object of class `ltraj`. The
+latter is used in the `adehabitatLT` package where numerous function
+are dedicated to the analysis of trajectories (see @calenge2008).
 
 ##`xytb2hmm` 
 
-This function import an `xytb` object to the `moveHMM` class. The
-latter is used in the `moveHMM` package and provide function
+This function import a `xytb` object to an object of class `moveHMM`. 
+The latter is used in the `moveHMM` package which provides functions
 dedicated to the analysis of trajectories using hidden Markov models (see @michelot2016).
 
 #An example
@@ -208,9 +225,12 @@ The data frame `track_CAGA_005` contains the tracking and behavioural data
 collected from a Cape gannet (\emph{Morus capensis}, Lichtenstein 1823). Tracking data
 include latitude, longitude and time (class POSIXct). Behavioural data include
 three states coded as '1' (bird diving), '2' (bird sitting on the water), '3'
-(bird flying), and a state `-1`  for data points where the behaviour could not
-be observed. This parameters has to be passed to the functions during 
-the analysis: the parameter `nob` is equal to '-1' in our case (see functions' help). 
+(bird flying), and a state `-1` for data points where the behaviour could not
+be observed. 
+A state with no observation can be declared in some functions (`resB` for
+example) using the parameter `nob`, equal to '-1' in our case (see functions'
+help). 
+
 
 ```{r data1,warn=FALSE,cache=TRUE,echo=TRUE}
 library(m2b)
@@ -263,8 +283,9 @@ xytb<-modelRF(xytb,type="actual",ntree=501,mtry=15)
 
 Some diagnostic plots are available using the `resRF` function to check the fit
 of the model.
-The function `extractRF` made the model available in the `randomForest`
-format, and let the use of the other function of the `randomForest` package.
+In addition, the function `extractRF` can be used to export the resulting model to the `randomForest`
+format, so that other function from the `randomForest` package can be used to
+perform a deep analysis of the model.
 
 ```{r model2,warn=FALSE,cache=TRUE,echo=TRUE}
 resRF(xytb)

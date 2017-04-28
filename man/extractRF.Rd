@@ -13,8 +13,8 @@ extractRF(xytb)
 a randomForest object as defined by the randomForest package.
 }
 \description{
-The random forest model is extracted from the xytb object and randomForest functions can be
-used on it.
+The random forest model is extracted from the xytb object to a randomForest
+object.
 }
 \examples{
 #track_CAGA_005 is dataset

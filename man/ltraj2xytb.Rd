@@ -16,7 +16,7 @@ A xytb object with behavioural information taken from the infolocs
 (aka ltraj object should correspond the an export of xytb object in ltraj).
 }
 \description{
-The function converts a ltraj object in an  xytb object 
+The function converts a ltraj object to a xytb object 
 (see  
 \url{https://cran.r-project.org/web/packages/adehabitatLT/index.html}
 and \link{xytb-class}).

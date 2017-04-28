@@ -13,7 +13,7 @@ xytb2ltraj(xytb)
 A ltraj object with behavioural information recorded in the infoloc
 }
 \description{
-The function converts a xytb object in ltraj object as defined in the
+The function converts a xytb object to a ltraj object as defined in the
 adehabitatLT package (see 
 \url{https://cran.r-project.org/web/packages/adehabitatLT/index.html}
 \link[adehabitatLT]{as.ltraj}).

@@ -13,7 +13,7 @@ xytb2hmm(xytb)
 A dataframe ready to be used by the function of the `moveHMM`
 }
 \description{
-The function converts a xytb object in an moveHMM dataframe 
+The function converts a xytb object to a moveHMM dataframe 
 (see 
 \url{https://cran.r-project.org/web/packages/moveHMM/index.html}
 and \link[moveHMM]{prepData}).

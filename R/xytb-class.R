@@ -78,7 +78,7 @@ setClass(Class='xytb',
 
 #' xytb class conversion to ltraj object 
 #'
-#' The function converts a xytb object in ltraj object as defined in the
+#' The function converts a xytb object to a ltraj object as defined in the
 #' adehabitatLT package (see 
 #' \url{https://cran.r-project.org/web/packages/adehabitatLT/index.html}
 #' \link[adehabitatLT]{as.ltraj}).
@@ -108,7 +108,7 @@ xytb2ltraj<-function(xytb){
 
 #' ltraj object conversion to xytb object 
 #'
-#' The function converts a ltraj object in an  xytb object 
+#' The function converts a ltraj object to a xytb object 
 #' (see  
 #' \url{https://cran.r-project.org/web/packages/adehabitatLT/index.html}
 #' and \link{xytb-class}).
@@ -147,7 +147,7 @@ ltraj2xytb<-function(ltraj,desc="ltraj object convert to xytb"){
 
 #' xytb object conversion to moveHMM object 
 #'
-#' The function converts a xytb object in an moveHMM dataframe 
+#' The function converts a xytb object to a moveHMM dataframe 
 #' (see 
 #' \url{https://cran.r-project.org/web/packages/moveHMM/index.html}
 #' and \link[moveHMM]{prepData}).
@@ -687,9 +687,8 @@ modelRF<-function(xytb,type=c("actual","shifted"),nob="-1",
 
 #' Extract the random forest model from an xytb object
 #'
-#' The random forest model is extracted from the xytb object and randomForest functions can be
-#' used on it.
-#'
+#' The random forest model is extracted from the xytb object to a randomForest
+#' object.
 #'
 #' @seealso  See \link[randomForest]{randomForest}
 #' @author Laurent Dubroca
