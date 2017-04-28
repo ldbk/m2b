@@ -1,9 +1,8 @@
-M2B - Movement to behaviour
-=====
+# M2B - Movement to behaviour
 
 A package to build behavioural model on track data, using randomForest.
 
-#Installation
+# Installation
 
 In a R console:
 
@@ -13,7 +12,7 @@ In a R console:
 
 `install_github("ldbk/m2b")`
 
-#Description
+# Description
 
 Animal behaviour, including social interactions, are fundamental to the field of
 ecology. Whereas the direct observation of animal behaviour is often limited due
