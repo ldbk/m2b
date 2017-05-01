@@ -1,9 +1,9 @@
 Package: m2b
 Title: Movement to Behaviour
 Version: 1.0
-Description: A package to predict behaviour from movement 
+Description: Prediction of behaviour from movement 
 	characteristics using observation and random forest.
-	Need to extend the description.
+VignetteBuilder: knitr 
 Depends:
     R (>= 3.3.0)
 Imports:
@@ -16,10 +16,12 @@ Imports:
     methods,
     graphics,
     stats,
+    DiagrammeR,
     utils
 Suggests:
 	adehabitatLT,
-	moveHMM
+	moveHMM,
+	knitr
 License: GPL-3
 URL: https://github.com/ldbk/m2b
 Encoding: UTF-8

@@ -2,10 +2,10 @@
 title: "m2b tutorial"
 author: "Laurent Dubroca, Andréa Thiebault"
 date: "`r Sys.Date()`"
-output: html_vignette
-bibliography: '/home/moi/datahome/work/biblio/enfin/biblioloran.bib'
+output: rmarkdown::html_vignette
+bibliography: bibliography.bib
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{m2b tutorial}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---

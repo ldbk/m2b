@@ -25,6 +25,7 @@ a ggplot
 Representation of the predicted vs observed behaviour of an xytb object
 }
 \examples{
+\dontrun{
 #track_CAGA_005 is dataset
 #generate a complete xytb object with derived (over moving windows of 3, 5
 #and 9 points, with quantile at 0, 50 and 100\%) and shifted information on 10
@@ -39,6 +40,7 @@ zerovar=TRUE,rfcv=FALSE,step=.9)
 resB(xytb,type="time",nob="-1")
 resB(xytb,type="space",nob="-1")
 resB(xytb,type="density",nob="-1")
+}
 }
 \seealso{
 See \link[randomForest]{randomForest}

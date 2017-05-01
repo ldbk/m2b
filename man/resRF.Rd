@@ -27,6 +27,7 @@ cross-validation plot, confusion matrix of the observed vs predicted
 behaviours).
 }
 \examples{
+\dontrun{ 
 #track_CAGA_005 is dataset
 #generate a complete xytb object with derived (over moving windows of 3, 5
 #and 9 points, with quantile at 0, 50 and 100\%) and shifted information on 10
@@ -42,6 +43,7 @@ resRF(xytb,type="rf")
 resRF(xytb,type="importance")
 resRF(xytb,type="rfcv")
 resRF(xytb,type="confusion")
+}
 }
 \seealso{
 See \link[randomForest]{randomForest}

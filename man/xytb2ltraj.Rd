@@ -15,7 +15,7 @@ A ltraj object with behavioural information recorded in the infoloc
 \description{
 The function converts a xytb object to a ltraj object as defined in the
 adehabitatLT package (see 
-\url{https://cran.r-project.org/package=adehabitatLT/index.html}
+\url{https://CRAN.R-project.org/package=adehabitatLT}
 \link[adehabitatLT]{as.ltraj}).
 }
 \examples{

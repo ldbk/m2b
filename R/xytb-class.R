@@ -80,7 +80,7 @@ setClass(Class='xytb',
 #'
 #' The function converts a xytb object to a ltraj object as defined in the
 #' adehabitatLT package (see 
-#' \url{https://cran.r-project.org/package=adehabitatLT/index.html}
+#' \url{https://CRAN.R-project.org/package=adehabitatLT}
 #' \link[adehabitatLT]{as.ltraj}).
 #'
 #' @param xytb An xytb object
@@ -110,7 +110,7 @@ xytb2ltraj<-function(xytb){
 #'
 #' The function converts a ltraj object to a xytb object 
 #' (see  
-#' \url{https://cran.r-project.org/web/package=adehabitatLT/index.html}
+#' \url{https://CRAN.R-project.org/package=adehabitatLT}
 #' and \link{xytb-class}).
 #'
 #' @param ltraj A ltraj object
@@ -149,7 +149,7 @@ ltraj2xytb<-function(ltraj,desc="ltraj object convert to xytb"){
 #'
 #' The function converts a xytb object to a moveHMM dataframe 
 #' (see 
-#' \url{https://cran.r-project.org/web/packages/moveHMM/index.html}
+#' \url{https://CRAN.R-project.org/package=moveHMM}
 #' and \link[moveHMM]{prepData}).
 #'
 #' @param xytb A xytb object
@@ -603,9 +603,11 @@ setMethod("plot",
 #' #parameters ("actual")
 #' xytb<-modelRF(xytb,"actual",nob="-1",colin=TRUE,varkeep=c("v","thetarel"),
 #' zerovar=TRUE)
+#' \dontrun{ 
 #' #cross-validation for the same model (time consuming !)
 #' xytb<-modelRF(xytb,"actual",nob="-1",colin=TRUE,varkeep=c("v","thetarel"),
 #' zerovar=TRUE,rfcv=TRUE)
+#' }
 #' 
 #'
 #' @seealso See \link[randomForest]{randomForest} and \link[randomForest]{rfcv}
@@ -743,6 +745,7 @@ extractRF<-function(xytb){
 #'
 #' @return plots or tables.
 #' @examples
+#' \dontrun{ 
 #' #track_CAGA_005 is dataset
 #' #generate a complete xytb object with derived (over moving windows of 3, 5
 #' #and 9 points, with quantile at 0, 50 and 100%) and shifted information on 10
@@ -758,6 +761,7 @@ extractRF<-function(xytb){
 #' resRF(xytb,type="importance")
 #' resRF(xytb,type="rfcv")
 #' resRF(xytb,type="confusion")
+#' }
 #' @export
 resRF<-function(xytb,type="rf"){
 	if(class(xytb)!="xytb"){ stop("invalid xytb object") }
@@ -829,6 +833,7 @@ resRF<-function(xytb,type="rf"){
 #'
 #' @return a ggplot 
 #' @examples
+#' \dontrun{
 #' #track_CAGA_005 is dataset
 #' #generate a complete xytb object with derived (over moving windows of 3, 5
 #' #and 9 points, with quantile at 0, 50 and 100%) and shifted information on 10
@@ -843,6 +848,7 @@ resRF<-function(xytb,type="rf"){
 #' resB(xytb,type="time",nob="-1")
 #' resB(xytb,type="space",nob="-1")
 #' resB(xytb,type="density",nob="-1")
+#' }
 #' @import ggplot2
 #' @export
 resB<-function(xytb,type="time",nob="-1"){

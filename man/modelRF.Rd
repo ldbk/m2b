@@ -58,9 +58,11 @@ xytb<-xytb(track_CAGA_005,"a track",c(3,5,9),c(0,.5,1),c(10,100))
 #parameters ("actual")
 xytb<-modelRF(xytb,"actual",nob="-1",colin=TRUE,varkeep=c("v","thetarel"),
 zerovar=TRUE)
+\dontrun{ 
 #cross-validation for the same model (time consuming !)
 xytb<-modelRF(xytb,"actual",nob="-1",colin=TRUE,varkeep=c("v","thetarel"),
 zerovar=TRUE,rfcv=TRUE)
+}
 
 
 }
