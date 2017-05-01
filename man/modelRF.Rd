@@ -42,7 +42,8 @@ package for more details)}
 }
 \description{
 Build a random forest model on a xytb object, predicting behaviour using
-regular observation (type `actual`) or shifted one (type `shifted`). Parameters
+only the variables calculated at the time of observation (type `actual`) or
+using the variable shifted backwards in time (type `shifted`). Parameters
 are transfered to the randomForest or the rfcv functions of the randomForest
 package if needed.
 }

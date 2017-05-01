@@ -176,7 +176,8 @@ variables, three parameters can be set:
 
 - `winsize` specifies the sizes of sliding windows on which to compute the statistical operators,
 - `idquant` specifies the quantiles to be computed, 
-- `move` (optional) specifies the number of points for the calculated variables to be shifted backward.
+- `move` (optional) specifies the number of points for the calculated variables to be shifted backward (
+  variables to be added to the ones calculated at the time).
   
 
 If included,

@@ -80,7 +80,7 @@ setClass(Class='xytb',
 #'
 #' The function converts a xytb object to a ltraj object as defined in the
 #' adehabitatLT package (see 
-#' \url{https://cran.r-project.org/web/packages/adehabitatLT/index.html}
+#' \url{https://cran.r-project.org/package=adehabitatLT/index.html}
 #' \link[adehabitatLT]{as.ltraj}).
 #'
 #' @param xytb An xytb object
@@ -110,7 +110,7 @@ xytb2ltraj<-function(xytb){
 #'
 #' The function converts a ltraj object to a xytb object 
 #' (see  
-#' \url{https://cran.r-project.org/web/packages/adehabitatLT/index.html}
+#' \url{https://cran.r-project.org/web/package=adehabitatLT/index.html}
 #' and \link{xytb-class}).
 #'
 #' @param ltraj A ltraj object
@@ -186,10 +186,10 @@ test<-function(){
 	#library(moveHMM)
 	#Examples
 	#' #track_CAGA_005 is a dataset
-	library(m2b)
-	 xytb<-xytb(track_CAGA_005,"a track",3,.5)
-	xyhmm<-xytb2hmm(xytb)
-	plot(xyhmm)
+	#library(m2b)
+	# xytb<-xytb(track_CAGA_005,"a track",3,.5)
+	#xyhmm<-xytb2hmm(xytb)
+	#plot(xyhmm)
 }
 
 
@@ -420,7 +420,7 @@ dxyt<-function(xyt){
   xy$dt<-as.numeric(c(difftime(xy$t[-1],xy$t[-nrow(xy)],units="s"),"NA"))
   idx<-which(names(xy)=="x")
   idy<-which(names(xy)=="y")
-  xy$dist<- c(distVincentyEllipsoid(as.matrix(xy[1:(nrow(xy)-1),c(idx,idy)]),as.matrix(xy[2:nrow(xy),c(idx,idy)])),NA)
+  xy$dist<- c(geosphere::distVincentyEllipsoid(as.matrix(xy[1:(nrow(xy)-1),c(idx,idy)]),as.matrix(xy[2:nrow(xy),c(idx,idy)])),NA)
   xy$v<-xy$dist/xy$dt
   xy$dx<-c(diff(xy$x),NA)
   xy$dy<-c(diff(xy$y),NA)
@@ -563,7 +563,8 @@ setMethod("plot",
 #' xytb randomForest function
 #'
 #' Build a random forest model on a xytb object, predicting behaviour using
-#' regular observation (type `actual`) or shifted one (type `shifted`). Parameters
+#' only the variables calculated at the time of observation (type `actual`) or
+#' using the variable shifted backwards in time (type `shifted`). Parameters
 #' are transfered to the randomForest or the rfcv functions of the randomForest
 #' package if needed.
 #'

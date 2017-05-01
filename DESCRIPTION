@@ -7,6 +7,7 @@ Description: A package to predict behaviour from movement
 Depends:
     R (>= 3.3.0)
 Imports:
+    geosphere,
     caTools,
     ggplot2,
     randomForest,
