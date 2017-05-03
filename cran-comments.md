@@ -1,3 +1,9 @@
+## Resubmission
+
+This is a resubmission. 
+Corrections related to the vignette size and DESCRIPTION warnings
+ were applied.
+
 ## Test environments
 
 * local Ubuntu 14.04 install, R 3.3.0
@@ -16,7 +22,3 @@ There were 0 ERROR(S), 0 WARNIGN(S), 1 NOTE(S) on win-builder:
 ## Downstream dependencies
 
 No ERRORs or WARNINGS found. 
-
-##Acknowledgement
-
-To the CRAN volunteer who will read this : thanks for your job.

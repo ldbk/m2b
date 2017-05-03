@@ -2,13 +2,17 @@
 title: "m2b tutorial"
 author: "Laurent Dubroca, Andréa Thiebault"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: rmarkdown::pdf_document
 bibliography: bibliography.bib
 vignette: >
   %\VignetteIndexEntry{m2b tutorial}
   %\VignetteEngine{knitr::rmarkdown}
-  \usepackage[utf8]{inputenc}
+  %\VignetteEncoding{UTF-8}
 ---
+
+```{r,echo=F}
+knitr::opts_chunk$set(dev='png')
+```
 
 #Introduction
 
