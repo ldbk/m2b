@@ -13,8 +13,8 @@ Description: Prediction of behaviour from movement
 	as much information as possible on the changes and variations of movement and
 	ensures the use of the random forest algorithm to its best capacity. The method
 	is very generic, applicable to any set of data providing movement data together with
-	observation of behaviour. 
-VignetteBuilder: knitr 
+	observation of behaviour.
+VignetteBuilder: knitr
 Depends:
     R (>= 3.3.0)
 Imports:
@@ -27,12 +27,12 @@ Imports:
     methods,
     graphics,
     stats,
-    DiagrammeR,
     utils
 Suggests:
 	adehabitatLT,
 	moveHMM,
-	knitr
+	knitr,
+	DiagrammeR
 License: GPL-3
 URL: https://github.com/ldbk/m2b
 Encoding: UTF-8

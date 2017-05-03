@@ -2,7 +2,7 @@
 title: "m2b tutorial"
 author: "Laurent Dubroca, Andréa Thiebault"
 date: "`r Sys.Date()`"
-output: rmarkdown::pdf_document
+output: html_vignette
 bibliography: bibliography.bib
 vignette: >
   %\VignetteIndexEntry{m2b tutorial}
@@ -49,7 +49,7 @@ This tutorial presents a new class named `xytb`, the functions that were
 implemented for the use of this package, and an example of application.
 The package can be installed using the CRAN system (`install.package("m2b")`),
 but the development version can be found on github
-(\url{https://github.com/ldbk/m2b}).
+(https://github.com/ldbk/m2b).
 
 #A new class
 
@@ -68,9 +68,11 @@ extension, for the user to (1) keep track of the precision of the model
 predictions and (2) exchange the analyses and results with different users
 easily. 
 
+![Schematic of the work flow from the raw data to the results. The `legend` box provides the symbolic representation (shape and color) of the different objects. The arrows between boxes represent the use of the package functions and methods: in blue the computation of the data, in red the modelling, in green the outputs and in pink the export to the ltraj format (adehabitat package). The diamond boxes inside the `xytb object` box represent the slots of the classi (dotted lines link the xytb class and the slots). Diagram generated using Graphviz.
+](diagramme.png)
 
-```{r diag,warn=FALSE,cache=TRUE,echo=FALSE,fig.cap="Schematic of the work flow from the raw data to the results. The `legend` box provides the symbolic representation (shape and color) of the different objects. The arrows between boxes represent the use of the package functions and methods: in blue the computation of the data, in red the modelling, in green the outputs and in pink the export to the ltraj format (adehabitat package). The diamond boxes inside the `xytb object` box represent the slots of the classi (dotted lines link the xytb class and the slots). Diagram generated using Graphviz."}
-DiagrammeR::grViz("
+```{r diag,warn=FALSE,cache=TRUE,echo=FALSE,eval=F,fig.cap="Schematic of the work flow from the raw data to the results. The `legend` box provides the symbolic representation (shape and color) of the different objects. The arrows between boxes represent the use of the package functions and methods: in blue the computation of the data, in red the modelling, in green the outputs and in pink the export to the ltraj format (adehabitat package). The diamond boxes inside the `xytb object` box represent the slots of the classi (dotted lines link the xytb class and the slots). Diagram generated using Graphviz."}
+DiagrammeR::grViz(width=800,height=800,diagram="
 	digraph rmarkdown {
 	graph[center=true,ratio=auto,rankdir=TD,compound=true];
 
@@ -196,7 +198,7 @@ are saved in the corresponding slots.
 This function computes a random forest model to predict the behavioural 
 observations (response) from the movement data (predictors). This is a simple wrapper calling the
 randomForest function from the randomForest package
-(\url{https://cran.r-project.org/web/packages/randomForest/index.html}). 
+(https://cran.r-project.org/web/packages/randomForest/index.html). 
 This function will update the `xytb` object and store the outputs in the slots
 `rfcv` (cross-validation for the choice of the parameter `mtry`), `model`
 (model itself) and `predb` (predictions). Cross-validation has to be done

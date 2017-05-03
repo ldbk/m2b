@@ -1,13 +1,14 @@
 ## Resubmission
 
 This is a resubmission. 
-Corrections related to the vignette size and DESCRIPTION warnings
- were applied.
+Corrections related to the vignette size, DESCRIPTION warnings and
+vignette builder were applied.
 
 ## Test environments
 
 * local Ubuntu 14.04 install, R 3.3.0
-* win-builder (release)
+* win-builder (R-release)
+* win-builder (R-devel)
 
 ## R CMD check results
 
