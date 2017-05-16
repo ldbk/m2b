@@ -32,7 +32,8 @@ Suggests:
 	adehabitatLT,
 	moveHMM,
 	knitr,
-	DiagrammeR
+	DiagrammeR,
+    rmarkdown
 License: GPL-3
 URL: https://github.com/ldbk/m2b
 Encoding: UTF-8

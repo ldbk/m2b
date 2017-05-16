@@ -2,7 +2,7 @@
 title: "m2b tutorial"
 author: "Laurent Dubroca, Andréa Thiebault"
 date: "`r Sys.Date()`"
-output: html_vignette
+output: rmarkdown::html_vignette
 bibliography: bibliography.bib
 vignette: >
   %\VignetteIndexEntry{m2b tutorial}
@@ -198,7 +198,7 @@ are saved in the corresponding slots.
 This function computes a random forest model to predict the behavioural 
 observations (response) from the movement data (predictors). This is a simple wrapper calling the
 randomForest function from the randomForest package
-(https://cran.r-project.org/web/packages/randomForest/index.html). 
+(https://CRAN.R-project.org/package=randomForest). 
 This function will update the `xytb` object and store the outputs in the slots
 `rfcv` (cross-validation for the choice of the parameter `mtry`), `model`
 (model itself) and `predb` (predictions). Cross-validation has to be done

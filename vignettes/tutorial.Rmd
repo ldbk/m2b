@@ -2,7 +2,7 @@
 title: "m2b tutorial"
 author: "Laurent Dubroca, Andréa Thiebault"
 date: "`r Sys.Date()`"
-output: html_vignette
+output: rmarkdown::html_vignette
 bibliography: bibliography.bib
 vignette: >
   %\VignetteIndexEntry{m2b tutorial}
@@ -16,34 +16,35 @@ knitr::opts_chunk$set(dev='png')
 
 #Introduction
 
-Animal behaviour, including social interactions, are fundamental to the field of
-ecology. Whereas the direct observation of animal behaviour is often limited due
-to logistical constraints, collection of movement data have been greatly
-facilitated through the development of bio-logging. Animal movement data
-obtained through tracking instrumentation may potentially constitute a relevant
-proxy to infer animal behaviour. This is, however, based on the premise that a
-range of movement patterns can be linked to specific behaviours.
+Animal behaviours affect animal distributions and trophic relationships and are
+therefore fundamental in determining ecological patterns. Whereas the direct
+observation of animal behaviour is often limited due to logistical constraints,
+collection of movement data have been greatly facilitated through the
+development of bio-logging. Animal movement data obtained through tracking
+instrumentation may potentially constitute a relevant proxy to infer animal
+behaviour. This is, however, based on the premise that a range of movement
+patterns can be linked to specific behaviours.
 
-Statistical learning constitutes a number of methods that can be used to
-assess the link between given variables from a fully informed training
-dataset and then predict the values on a non-informed variable. We chose the
-random forest algorithm for its capacity to deal with imbalanced data
-(particularly relevant for behavioural data), its high prediction accuracy
-and its ease of implementation (@breiman2001b, @chen2004). 
-The strength of random forest partly relies
-in its ability to handle a very large number of variables. Hence, our
-methodology is based on the derivation of multiple predictor variables from
-the movement data over various temporal scales, in order to capture as much
+Statistical learning constitutes a number of methods that can be used to assess
+the link between given variables from a fully informed training dataset and then
+predict the values on a non-informed variable. We chose the random forest
+algorithm for its capacity to deal with imbalanced data (particularly relevant
+for behavioural data), its high prediction accuracy and its ease of
+implementation (@breiman2001b, @chen2004). The strength of random forest partly
+relies in its ability to handle a very large number of variables. Hence, our
+methodology is based on the derivation of multiple predictor variables from the
+movement data over various temporal scales, in order to capture as much
 information as possible on the changes and variations of movement.
 
 In this package we developed a method to link the movement patterns of animals
-with their behaviour, using the random forest algorithm. The specificity of this
-method relies on the derivation of multiple predictor variables from the
-movement data over a range of temporal windows. This procedure allows to capture
-as much information as possible on the changes and variations of movement and
-ensures the use of the random forest algorithm to its best capacity. The method
-is very generic, applicable to any dataset providing movement data together with
-observation of behaviour.
+with their behavioural states, using the random forest algorithm. The
+behavioural state of an animal can refer here to any categorization of the
+observed behaviour. The specificity of this method relies on the derivation of
+multiple predictor variables from the movement data over a range of temporal
+windows. This procedure allows to capture as much information as possible on the
+changes and variations of movement and ensures the use of the random forest
+algorithm to its best capacity. The method is very generic, applicable to any
+dataset providing movement data together with observation of behaviour.
 
 This tutorial presents a new class named `xytb`, the functions that were
 implemented for the use of this package, and an example of application.
@@ -53,17 +54,17 @@ but the development version can be found on github
 
 #A new class
 
-
 `xytb` is a S4 class built to provide in a single object all the information
 associated to a track. This includes the tracking data (two dimension space
-coordinates, time and observed behaviours), the predictor variables derived from
+coordinates, time and behavioural states), the predictor variables derived from
 the movement data, the resulting model (to be used on other datasets) and the
-prediction (predicted behaviours on the given dataset). 
-`xyt` relates to information about the movement data, and `b` to the behaviour. 
+prediction (on the given dataset). 
+`xyt` relates to information about the movement data, and `b` to the behavioural
+state. 
 These information are containted into 8 slots, each of them deriving from
 different methods and functions (see Figure 1 for details). This object was
 created for the user to keep everything (data, model and prediction) in a single
-container,but also, by 
+container, but also, by 
 extension, for the user to (1) keep track of the precision of the model
 predictions and (2) exchange the analyses and results with different users
 easily. 
@@ -172,7 +173,7 @@ trackings and behavioural data in the object.
 
 The data must be presented in a dataframe with locations in lines, and 5
 variables in column: `x` the longitude, `y` the latitude, `t` the time in
-POSIXct format, `b` the observed behaviour and `id` the individual
+POSIXct format, `b` the behavioural state and `id` the individual
 identification for the track.
 The function `xytb` can then be used with this dataframe as an input, so the
 predictor variables are calculated and stored in the slots `dxyt`
@@ -196,9 +197,9 @@ are saved in the corresponding slots.
 ##`modelRF`
 
 This function computes a random forest model to predict the behavioural 
-observations (response) from the movement data (predictors). This is a simple wrapper calling the
+state (response) from the movement data (predictors). This is a simple wrapper calling the
 randomForest function from the randomForest package
-(https://cran.r-project.org/web/packages/randomForest/index.html). 
+(https://CRAN.R-project.org/package=randomForest). 
 This function will update the `xytb` object and store the outputs in the slots
 `rfcv` (cross-validation for the choice of the parameter `mtry`), `model`
 (model itself) and `predb` (predictions). Cross-validation has to be done
@@ -259,8 +260,12 @@ between the  reaction
 of the animal captured in the movement data, and its behaviour as recorded by
 the observer.
 The rationale behind this operation is based on the fact that
-some change in movement can be triggered by behavioural observation made
-afterward by the scientist but sooner by the animal.   
+some changes in movement can be related to a change in behavioural state
+observed only later by the scientist. For example, an animal may react to
+something detected from a distance (like a possible feeding area), a change
+immediately captured in the movement data, but the reason for its movement
+(starting to feed) will only appear later in the observation data.
+
 
 ```{r data2,warning=FALSE,cache=TRUE,echo=TRUE}
 library(m2b)
