@@ -4,9 +4,18 @@
 \alias{modelRF}
 \title{xytb randomForest function}
 \usage{
-modelRF(xytb, type = c("actual", "shifted"), nob = "-1", colin = TRUE,
-  varkeep = c("v", "dist", "thetarel"), zerovar = TRUE, rfcv = FALSE,
-  ntree = 501, importance = TRUE, ...)
+modelRF(
+  xytb,
+  type = c("actual", "shifted"),
+  nob = "-1",
+  colin = TRUE,
+  varkeep = c("v", "dist", "thetarel"),
+  zerovar = TRUE,
+  rfcv = FALSE,
+  ntree = 501,
+  importance = TRUE,
+  ...
+)
 }
 \arguments{
 \item{xytb}{an xytb object}
@@ -21,7 +30,7 @@ where prediction are done)}
 package for more details)}
 
 \item{varkeep}{character vector - the variables names in this vector are
-keeped in the model even if colinearity is found (usefull to keep 'classical'
+kept in the model even if colinearity is found (usefull to keep 'classical'
 parameters and to help interpretation)}
 
 \item{zerovar}{boolean - remove near zero variance predictor (see the caret

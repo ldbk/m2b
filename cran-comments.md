@@ -3,6 +3,7 @@
 This is a resubmission. 
 Corrections related to the vignette size, DESCRIPTION warnings and
 vignette builder were applied.
+The Rd cross-references check notes send by email was corrected.
 
 ## Test environments
 

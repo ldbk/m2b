@@ -14,7 +14,7 @@
 #' dt: \tab time (s) between the current location and the next one\cr
 #' dist: \tab distance (m) between the current location and the next one
 #'   calculated using the Vincenty ellipsoid method.
-#'   See \link{distVincentyEllipsoid})\cr
+#'   See \link[m2b]{distVincentyEllipsoid})\cr
 #' v: \tab speed (m.s^{-1})\cr
 #' dx: \tab the increase of the move in the x direction.\cr
 #' dy: \tab the increase of the move in the y direction.\cr
@@ -111,7 +111,7 @@ xytb2ltraj<-function(xytb){
 #' The function converts a ltraj object to a xytb object 
 #' (see  
 #' \url{https://CRAN.R-project.org/package=adehabitatLT}
-#' and \link{xytb-class}).
+#' and \link[m2b]{xytb-class}).
 #'
 #' @param ltraj A ltraj object
 #' @param desc General descriptor of the data
@@ -196,7 +196,7 @@ test<-function(){
 
 #' xytb class constructor
 #'
-#' The methods to build an xytb object (see \link{xytb-class} for the class
+#' The methods to build an xytb object (see \link[m2b]{xytb-class} for the class
 #' description).
 #' 
 #' @param object a data frame with 5 columns
@@ -578,7 +578,7 @@ setMethod("plot",
 #' @param colin boolean - remove colinearity among predictors (see the caret
 #' package for more details)
 #' @param varkeep character vector - the variables names in this vector are
-#' keeped in the model even if colinearity is found (usefull to keep 'classical'
+#' kept in the model even if colinearity is found (usefull to keep 'classical'
 #' parameters and to help interpretation)
 #' @param zerovar boolean - remove near zero variance predictor (see the caret
 #' package for more details)
@@ -623,7 +623,10 @@ modelRF<-function(xytb,type=c("actual","shifted"),nob="-1",
 	if(type=="actual"){ dat0<-cbind(xytb@b,xytb@dxyt,stringsAsFactors=F) }
 	if(type=="shifted"){ dat0<-cbind(xytb@b,xytb@befdxyt,stringsAsFactors=F) }
 	if(!nob%in%dat0$b){
-		stop("wrong no behavioural observation code")
+		warning("wrong no behavioural observation code")
+		idna<-as.numeric(attr(stats::na.omit(dat0),"na.action"))
+		dat0$b[dat0$b==nob]<-NA
+		initdat0<-dat0
 	}else{
 		idna<-as.numeric(attr(stats::na.omit(dat0),"na.action"))
 		dat0$b[dat0$b==nob]<-NA
@@ -640,7 +643,7 @@ modelRF<-function(xytb,type=c("actual","shifted"),nob="-1",
 		print("removing colinearity among predictors")
 		idcolin<-caret::findCorrelation(stats::cor(dat0),.9,verbose=F)
 		if(length(idcolin)>0){
-			print(paste(paste(varkeep,collapse=","),"keeped",collapse=" "))
+			print(paste(paste(varkeep,collapse=","),"kept",collapse=" "))
 			idcolin<-idcolin[which(!names(dat0)[idcolin]%in%varkeep)]
 			if(length(idcolin)>0){
 				print(paste(paste(names(dat0)[idcolin],collapse=","),
@@ -656,7 +659,7 @@ modelRF<-function(xytb,type=c("actual","shifted"),nob="-1",
 		print("removing near zero variance predictors")
 		idzerovar<-caret::nearZeroVar(dat0)
 		if(length(idzerovar)>0){
-			print(paste(paste(varkeep,collapse=","),"keeped",collapse=" "))
+			print(paste(paste(varkeep,collapse=","),"kept",collapse=" "))
 			idzerovar<-idzerovar[which(!names(dat0)[idzerovar]%in%varkeep)]
 			if(length(idzerovar)>0){
 				print(paste(paste(names(dat0)[idzerovar],collapse=","),

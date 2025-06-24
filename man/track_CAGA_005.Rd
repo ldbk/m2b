@@ -5,7 +5,8 @@
 \alias{track_CAGA_005}
 \title{Data collected from a cape gannet track (\emph{Morus capensis}, Lichtenstein 1823),
 breeding on Bird Island (Algo Bay, South Africa) in december 2010.}
-\format{Tracking data
+\format{
+Tracking data
 
 Columns:
 
@@ -18,7 +19,8 @@ t = time in POSIXct
 b = behaviour observed on video data (3:flying, 2:sitting on water,
 1:diving ,-1:no data)
 
-id = individual id}
+id = individual id
+}
 \source{
 Andréa Thiebault
 }

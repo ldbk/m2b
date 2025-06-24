@@ -3,7 +3,6 @@
 \docType{package}
 \name{m2b}
 \alias{m2b}
-\alias{m2b-package}
 \title{Movement to behaviour package}
 \description{
 A package to infer behaviour and social interaction from

@@ -46,4 +46,4 @@ Authors@R: c(person("Laurent","Dubroca",
 	role= c("aut"),
 	email="andrea.thiebault@gmail.com"))
 Maintainer: Laurent Dubroca <laurent.dubroca@gmail.com>
-RoxygenNote: 6.0.1
+RoxygenNote: 7.1.1.9000
