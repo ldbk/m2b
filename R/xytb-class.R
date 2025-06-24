@@ -14,8 +14,8 @@
 #' dt: \tab time (s) between the current location and the next one\cr
 #' dist: \tab distance (m) between the current location and the next one
 #'   calculated using the Vincenty ellipsoid method.
-#'   See \link[m2b]{distVincentyEllipsoid})\cr
-#' v: \tab speed (m.s^{-1})\cr
+#'   See \link[geosphere]{distVincentyEllipsoid})\cr
+#' v: \tab speed (m.s^-1)\cr
 #' dx: \tab the increase of the move in the x direction.\cr
 #' dy: \tab the increase of the move in the y direction.\cr
 #' theta: \tab the angle between each move and the x axis.\cr
@@ -99,7 +99,7 @@ xytb2ltraj<-function(xytb){
 	if(!requireNamespace("adehabitatLT", quietly = TRUE)){
 	 stop("adehabitatLT needed for this function to work. Please install it.",call.=FALSE)
 	}
-	if(class(xytb)!="xytb"){stop("the object is not an xytb object")}
+	if(!inherits(xytb,"xytb")){stop("the object is not an xytb object")}
 	if(nrow(xytb@xyt)==0){stop("the xyt slot seems empty")}
 	xyt<-xytb@xyt
 	track<-adehabitatLT::as.ltraj(xy=xyt[,c("x","y")],date=xyt$t,id=xyt$id,infolocs=xytb@b)
@@ -118,10 +118,12 @@ xytb2ltraj<-function(xytb){
 #' @return A xytb object with behavioural information taken from the infolocs
 #' (aka ltraj object should correspond the an export of xytb object in ltraj).
 #' @examples
+#' \dontrun{ 
 #' #track_CAGA_005 is a dataset
 #' xytb<-xytb(track_CAGA_005,"a track",3,.5)
 #' ltraj<-xytb2ltraj(xytb)
 #' xytb2<-ltraj2xytb(ltraj,"a track")
+#' }
 #' @author Laurent Dubroca
 #' @name ltraj2xytb
 #' @export
@@ -169,7 +171,7 @@ xytb2hmm<-function(xytb){
 	if(!requireNamespace("moveHMM", quietly = TRUE)){
 	 stop("moveHMM needed for this function to work. Please install it.",call.=FALSE)
 	}
-	if(class(xytb)!="xytb"){stop("the object is not an xytb object")}
+	if(!inherits(xytb,"xytb")){stop("the object is not an xytb object")}
 	xy<-xytb@xyt
 	xy<-data.frame(ID=xy$id,x=xy$x,y=xy$y)
 	rez<-moveHMM::prepData(xy)
@@ -616,7 +618,7 @@ setMethod("plot",
 modelRF<-function(xytb,type=c("actual","shifted"),nob="-1",
 		  colin=TRUE,varkeep=c("v","dist","thetarel"),
 		  zerovar=TRUE,rfcv=FALSE,ntree=501,importance=TRUE,...){
-	if(class(xytb)!="xytb"){ stop("invalid xytb object") }
+	if(!inherits(xytb,"xytb")){ stop("invalid xytb object") }
 	if(!type%in%c("actual","shifted") | length(type)!=1){
 	 stop("invalid type")
 	}
@@ -718,7 +720,7 @@ modelRF<-function(xytb,type=c("actual","shifted"),nob="-1",
 #' plot(modRF)
 #' @export
 extractRF<-function(xytb){
-	if(class(xytb)!="xytb"){ stop("invalid xytb object") }
+	if(!inherits(xytb,"xytb")){ stop("invalid xytb object") }
 	if(length(xytb@model)==0){stop("No model in the object, please run randomRF first",call.=F)}
 	modRF<-xytb@model
 	class(modRF)<-c("randomForest")
@@ -767,7 +769,7 @@ extractRF<-function(xytb){
 #' }
 #' @export
 resRF<-function(xytb,type="rf"){
-	if(class(xytb)!="xytb"){ stop("invalid xytb object") }
+	if(!inherits(xytb,"xytb")){ stop("invalid xytb object") }
 	if(length(xytb@model)==0){stop("No model in the object, please run randomRF first",call.=F)}
 	if(any(is.na(type)) | length(type)>1){stop("Wrong type",call.=F)}
 	if(!any(type%in%c("rfcv","rf","importance","confusion"))){stop("Wrong type",call.=F)}
@@ -857,7 +859,7 @@ resRF<-function(xytb,type="rf"){
 resB<-function(xytb,type="time",nob="-1"){
 	if(any(is.na(type)) | length(type)>1){stop("Wrong type",call.=F)}
 	if(!any(type%in%c("space","time","density"))){stop("Wrong type",call.=F)}
-	if(class(xytb)!="xytb"){ stop("invalid xytb object",call.=F) }
+	if(!inherits(xytb,"xytb")){ stop("invalid xytb object",call.=F) }
 	if(length(xytb@predb)==0){stop("No predicted behaviour in the object, please run randomRF first.",call.=F)}
 	if(length(xytb@b)==0){stop("No observed behaviour in the object, please build the xytb object wisely.",call.=F)}
 	if(!nob%in%xytb@b$b){ stop("Wrong no behavioural observation code",call.=F) }

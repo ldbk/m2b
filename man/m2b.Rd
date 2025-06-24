@@ -2,6 +2,7 @@
 % Please edit documentation in R/m2b.R
 \docType{package}
 \name{m2b}
+\alias{m2b-package}
 \alias{m2b}
 \title{Movement to behaviour package}
 \description{
@@ -37,4 +38,20 @@ as much information as possible on the changes and variations of movement and
 ensures the use of the random forest algorithm to its best capacity. The method
 is very generic, applicable to any dataset providing movement data together with
 observation of behaviour.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/ldbk/m2b}
+}
+
+}
+\author{
+\strong{Maintainer}: Laurent Dubroca \email{laurent.dubroca@gmail.com}
+
+Authors:
+\itemize{
+  \item Andréa Thiebault \email{andrea.thiebault@gmail.com}
+}
+
 }

@@ -22,8 +22,8 @@ y: \tab latitude\cr
 dt: \tab time (s) between the current location and the next one\cr
 dist: \tab distance (m) between the current location and the next one
   calculated using the Vincenty ellipsoid method.
-  See \link{distVincentyEllipsoid})\cr
-v: \tab speed (m.s^{-1})\cr
+  See \link[geosphere]{distVincentyEllipsoid})\cr
+v: \tab speed (m.s^-1)\cr
 dx: \tab the increase of the move in the x direction.\cr
 dy: \tab the increase of the move in the y direction.\cr
 theta: \tab the angle between each move and the x axis.\cr

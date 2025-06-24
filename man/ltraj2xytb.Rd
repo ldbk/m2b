@@ -19,13 +19,15 @@ A xytb object with behavioural information taken from the infolocs
 The function converts a ltraj object to a xytb object 
 (see  
 \url{https://CRAN.R-project.org/package=adehabitatLT}
-and \link{xytb-class}).
+and \link[m2b]{xytb-class}).
 }
 \examples{
+\dontrun{ 
 #track_CAGA_005 is a dataset
 xytb<-xytb(track_CAGA_005,"a track",3,.5)
 ltraj<-xytb2ltraj(xytb)
 xytb2<-ltraj2xytb(ltraj,"a track")
+}
 }
 \author{
 Laurent Dubroca

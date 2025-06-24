@@ -1,6 +1,6 @@
 Package: m2b
 Title: Movement to Behaviour Inference using Random Forest
-Version: 1.0
+Version: 1.1
 Description: Prediction of behaviour from movement 
 	characteristics using observation and random forest for the analyses of movement
 	data in ecology.
@@ -22,12 +22,10 @@ Imports:
     caTools,
     ggplot2,
     randomForest,
-    e1071,
     caret,
     methods,
     graphics,
     stats,
-    utils
 Suggests:
 	adehabitatLT,
 	moveHMM,
@@ -38,7 +36,7 @@ License: GPL-3
 URL: https://github.com/ldbk/m2b
 Encoding: UTF-8
 LazyData: true
-Date: 2017-04-03
+Date: 2025-06-24
 Authors@R: c(person("Laurent","Dubroca",
 	email="laurent.dubroca@gmail.com",
 	role=c("aut","cre")),
@@ -46,4 +44,4 @@ Authors@R: c(person("Laurent","Dubroca",
 	role= c("aut"),
 	email="andrea.thiebault@gmail.com"))
 Maintainer: Laurent Dubroca <laurent.dubroca@gmail.com>
-RoxygenNote: 7.1.1.9000
+RoxygenNote: 7.3.2

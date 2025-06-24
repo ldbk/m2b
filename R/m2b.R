@@ -32,7 +32,5 @@
 #'is very generic, applicable to any dataset providing movement data together with
 #'observation of behaviour.
 #'
-#' @docType package
 #' @name m2b 
-NULL
-
+"_PACKAGE"

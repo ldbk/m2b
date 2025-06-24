@@ -59,7 +59,7 @@ backward by 5, 10 and 100 locations. Optional.}
 an xytb object
 }
 \description{
-The methods to build an xytb object (see \link{xytb-class} for the class
+The methods to build an xytb object (see \link[m2b]{xytb-class} for the class
 description).
 }
 \section{Methods' signature}{
