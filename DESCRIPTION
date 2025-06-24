@@ -1,6 +1,6 @@
 Package: m2b
 Title: Movement to Behaviour Inference using Random Forest
-Version: 1.1
+Version: 1.1.0
 Description: Prediction of behaviour from movement 
 	characteristics using observation and random forest for the analyses of movement
 	data in ecology.

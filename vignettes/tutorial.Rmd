@@ -60,7 +60,7 @@ coordinates, time and observed behaviours), the predictor variables derived from
 the movement data, the resulting model (to be used on other datasets) and the
 prediction (predicted behaviours on the given dataset). 
 `xyt` relates to information about the movement data, and `b` to the behaviour. 
-These information are containted into 8 slots, each of them deriving from
+These information are contained into 8 slots, each of them deriving from
 different methods and functions (see Figure 1 for details). This object was
 created for the user to keep everything (data, model and prediction) in a single
 container,but also, by 
@@ -68,10 +68,10 @@ extension, for the user to (1) keep track of the precision of the model
 predictions and (2) exchange the analyses and results with different users
 easily. 
 
-![Schematic of the work flow from the raw data to the results. The `legend` box provides the symbolic representation (shape and color) of the different objects. The arrows between boxes represent the use of the package functions and methods: in blue the computation of the data, in red the modelling, in green the outputs and in pink the export to the ltraj format (adehabitat package). The diamond boxes inside the `xytb object` box represent the slots of the classi (dotted lines link the xytb class and the slots). Diagram generated using Graphviz.
+![Schematic of the work flow from the raw data to the results. The `legend` box provides the symbolic representation (shape and color) of the different objects. The arrows between boxes represent the use of the package functions and methods: in blue the computation of the data, in red the modeling, in green the outputs and in pink the export to the ltraj format (adehabitat package). The diamond boxes inside the `xytb object` box represent the slots of the class (dotted lines link the xytb class and the slots). Diagram generated using Graphviz.
 ](diagramme.png)
 
-```{r diag,warn=FALSE,cache=TRUE,echo=FALSE,eval=F,fig.cap="Schematic of the work flow from the raw data to the results. The `legend` box provides the symbolic representation (shape and color) of the different objects. The arrows between boxes represent the use of the package functions and methods: in blue the computation of the data, in red the modelling, in green the outputs and in pink the export to the ltraj format (adehabitat package). The diamond boxes inside the `xytb object` box represent the slots of the classi (dotted lines link the xytb class and the slots). Diagram generated using Graphviz."}
+```{r diag,warn=FALSE,cache=TRUE,echo=FALSE,eval=F,fig.cap="Schematic of the work flow from the raw data to the results. The `legend` box provides the symbolic representation (shape and color) of the different objects. The arrows between boxes represent the use of the package functions and methods: in blue the computation of the data, in red the modeling, in green the outputs and in pink the export to the ltraj format (adehabitat package). The diamond boxes inside the `xytb object` box represent the slots of the classi (dotted lines link the xytb class and the slots). Diagram generated using Graphviz."}
 DiagrammeR::grViz(width=800,height=800,diagram="
 	digraph rmarkdown {
 	graph[center=true,ratio=auto,rankdir=TD,compound=true];
@@ -243,7 +243,7 @@ help).
 library(m2b)
 str(track_CAGA_005)
 ```
-Different methods are available to build a `xytb` objec. Here, the tracking and 
+Different methods are available to build a `xytb` object. Here, the tracking and 
 behavioural data are directly taken from the dataframe, and the predictor
 variables deriving from the tracking data are computed at the same time using
 the function `xytb`. The variables are 
@@ -271,7 +271,7 @@ xytb<-xytb(track_CAGA_005,desc="example track",
 plot(xytb)
 ```
 
-#Modelling
+#Modeling
 
 ##Model
 

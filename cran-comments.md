@@ -42,4 +42,9 @@ There were 0 ERROR(S), 0 WARNIGN(S), 1 NOTE(S) on win-builder R-devel
 
 ## Downstream dependencies
 
+We checked 0 reverse dependencies with revdepcheck, comparing R CMD check results across CRAN and dev versions of this package.
+
+ * We saw 0 new problems
+ * We failed to check 0 packages
+
 No ERRORs or WARNINGS found. 

@@ -180,7 +180,6 @@ xytb2hmm<-function(xytb){
 
 #' internal test function for dev purposes
 #'
-#' blablablablbalalb
 #'
 #' @keywords internal
 test<-function(){
@@ -233,7 +232,7 @@ test<-function(){
 #' 	information \code{dxyt} and
 #' 	\code{befdxyt}. \code{dxyt} contains statistical derivatives of speed, distance and
 #' 	relative angle calculated on moving windows given by the winsize
-#' 	parameters. Statistical derivatides are standard deviation, mean, median
+#' 	parameters. Statistical derivatives are standard deviation, mean, median
 #' 	absolute deviation and quantiles. Quantiles are defined by the
 #' 	\code{idquant}
 #' 	parameters. \code{befdxyt} contains \code{dxyt} values shifted back in
@@ -567,7 +566,7 @@ setMethod("plot",
 #' Build a random forest model on a xytb object, predicting behaviour using
 #' only the variables calculated at the time of observation (type `actual`) or
 #' using the variable shifted backwards in time (type `shifted`). Parameters
-#' are transfered to the randomForest or the rfcv functions of the randomForest
+#' are passed to the randomForest or the rfcv functions of the randomForest
 #' package if needed.
 #'
 #' @author Laurent Dubroca and Andréa Thiebault
@@ -580,7 +579,7 @@ setMethod("plot",
 #' @param colin boolean - remove colinearity among predictors (see the caret
 #' package for more details)
 #' @param varkeep character vector - the variables names in this vector are
-#' kept in the model even if colinearity is found (usefull to keep 'classical'
+#' kept in the model even if colinearity is found (to keep 'classical'
 #' parameters and to help interpretation)
 #' @param zerovar boolean - remove near zero variance predictor (see the caret
 #' package for more details)
@@ -592,7 +591,7 @@ setMethod("plot",
 #' @param ntree number of trees in the random Forest (see the randomForest
 #' package for more details)
 #' @param importance boolean (see the randomForest package for more details)
-#' @param ... other arguements passed to randonForest or rfcv
+#' @param ... other arguments passed to randomForest or rfcv
 #'
 #' @examples
 #' #track_CAGA_005 is dataset
